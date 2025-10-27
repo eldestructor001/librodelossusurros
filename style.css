@@ -1,3 +1,10 @@
+    @font-face {
+      font-family: 'Blackadder ITC';
+      src: url('assets/fonts/BlackadderITC.ttf') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+
     :root {
       --bg: #0b0b0c;
       --panel: #121213;
