@@ -7,7 +7,6 @@
   <title>La Noche de los Susurros en Huércal — Libro Digital</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
   <div class="app" role="application">
     <header>
@@ -17,10 +16,10 @@
         <p class="lead">Sigue las pistas, completa los retos y rompe la maldición antes de medianoche.</p>
       </div>
     </header>
-    <div id="timer-container">
-      <span id="timer-label">Tiempo:</span>
-      <span id="timer">00:00</span>
-    </div>
+          <div id="timer-container">
+            <span id="timer-label">Tiempo:</span>
+            <span id="timer">00:00</span>
+          </div>
     <div class="panel" id="startPanel">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <div>
@@ -43,22 +42,22 @@
     <div id="flow" class="hide">
 
       <!-- Punto 1 Pitonisa -->
-      <section id="punto1" class="hide">
-        <div class="panel section" id="sec1">
-          <h3>🔮 Punto 1 — La Pitonisa (Cortijo Moreno)</h3>
-          <div class="prompt">En el viejo cortijo, una pitonisa contempla una esfera de luz. Su mirada atraviesa el
-            tiempo, pero solo si sois capaces de ver lo que ella ve.</div>
-          <p class="small">Prueba: Observad la esfera de luz que os mostrará tres colores. Escribe en el orden correcto
-            los colores que la pitonisa menciona (separados por comas).</p>
-          <label>Respuesta (p.ej. rojo, blanco, verde)</label>
-          <input id="ans1" type="text" autocomplete="off" />
-          <div style="margin-top:8px">
-            <button onclick="check1()">Enviar respuesta</button>
-            <button class="hintBtn" onclick="useHint()">Pista (-2 min)</button>
-          </div>
-          <div id="msg1" class="small" style="margin-top:8px;color:#f2f2f2"></div>
+       <section id="punto1" class="hide">
+      <div class="panel section" id="sec1">
+        <h3>🔮 Punto 1 — La Pitonisa (Cortijo Moreno)</h3>
+        <div class="prompt">En el viejo cortijo, una pitonisa contempla una esfera de luz. Su mirada atraviesa el
+          tiempo, pero solo si sois capaces de ver lo que ella ve.</div>
+        <p class="small">Prueba: Observad la esfera de luz que os mostrará tres colores. Escribe en el orden correcto
+          los colores que la pitonisa menciona (separados por comas).</p>
+        <label>Respuesta (p.ej. rojo, blanco, verde)</label>
+        <input id="ans1" type="text" autocomplete="off" />
+        <div style="margin-top:8px">
+          <button onclick="check1()">Enviar respuesta</button>
+          <button class="hintBtn" onclick="useHint()">Pista (-2 min)</button>
         </div>
-      </section>
+        <div id="msg1" class="small" style="margin-top:8px;color:#f2f2f2"></div>
+      </div>
+</section>
       <!-- Punto 2 Motosierra -->
       <div class="panel section" id="sec2">
         <h3>🔪 Punto 2 — Túnel del Eco Carmesí</h3>
@@ -137,13 +136,6 @@ Si cada noche los muertos se levantan y duplican su número,
     let hintsUsed = 0;
     let teamName = '';
 
-    // Oculta todas las secciones al inicio
-    window.addEventListener('load', () => {
-      ['sec1', 'sec2', 'sec3', 'sec4', 'sec5'].forEach(id => {
-        document.getElementById(id).classList.add('hide');
-      });
-    });
-
     const correct = {
       1: ['rojo, blanco, verde', 'rojo,blanco,verde', 'rojo blanco verde'], // adjust if you want
       2: '13',
@@ -179,8 +171,6 @@ Si cada noche los muertos se levantan y duplican su número,
       if (!teamName) { alert('Introduce el nombre del equipo.'); return; }
       document.getElementById('startPanel').classList.add('hide');
       document.getElementById('flow').classList.remove('hide');
-      document.getElementById('sec1').classList.remove('hide'); // solo muestra el primero
-
       startTimer();
       document.getElementById('status').textContent = 'El cronómetro ha comenzado. Seguid las pistas y completad las pruebas.';
       // focus first answer
@@ -195,8 +185,6 @@ Si cada noche los muertos se levantan y duplican su número,
         msg.textContent = 'La pitonisa asiente. Pista desbloqueada: id a la entrada del túnel bajo las vías.';
         // scroll to next
         document.getElementById('sec2').scrollIntoView({ behavior: 'smooth' });
-        document.getElementById('sec1').classList.add('hide');
-        document.getElementById('sec2').classList.remove('hide');
       } else {
         msg.textContent = 'La luz vacila: prueba otra vez.';
       }
@@ -211,8 +199,6 @@ Si cada noche los muertos se levantan y duplican su número,
         r.classList.remove('hide');
         r.innerHTML = `<strong>Nota encontrada:</strong><pre style="white-space:pre-wrap;margin-top:6px">El trece despierta al muerto,\npero no en el camposanto.\nBúscalo donde la tierra se abre en cicatrices de barro y polvo.\nAllí, entre ruinas y sombras, el silencio camina lento.\n\nTres palabras guardan el secreto del lugar…\nquien quiere, quien fueran, quien camina solito.</pre><div style="margin-top:8px"><a class='link' target='_blank' href='https://what3words.com/quiere.fueran.solito'>Abrir localización</a></div>`;
         document.getElementById('sec3').scrollIntoView({ behavior: 'smooth' });
-        document.getElementById('sec2').classList.add('hide');
-        document.getElementById('sec3').classList.remove('hide');
       } else {
         msg.textContent = 'El eco no os da la respuesta. Volved a mirar la pared.';
       }
@@ -227,8 +213,6 @@ Si cada noche los muertos se levantan y duplican su número,
         r.classList.remove('hide');
         r.innerHTML = `<strong>Nota del muerto:</strong><pre style="white-space:pre-wrap;margin-top:6px">Donde el silencio reza tras los barrotes,\ny la luz parpadea entre oraciones,\nallí purgarás tus pecados.</pre><div style="margin-top:8px"><a class='link' target='_blank' href='https://www.google.com/maps/search/?api=1&query=Centro+Social+Jose+Guirado+Calle+del+Pueblo+36+Hu%C3%A9rcal+de+Almer%C3%ADa'>Ir a Centro Social José Guirado (mapa)</a></div>`;
         document.getElementById('sec4').scrollIntoView({ behavior: 'smooth' });
-        document.getElementById('sec3').classList.add('hide');
-        document.getElementById('sec4').classList.remove('hide');
       } else {
         msg.textContent = 'El muerto no se conforma. Recalculad los huesos.';
       }
@@ -240,8 +224,6 @@ Si cada noche los muertos se levantan y duplican su número,
         msg.textContent = 'La monja suspira. Habéis recuperado el escudo. Podéis regresar al inicio.';
         // mark progressed
         document.getElementById('sec5').scrollIntoView({ behavior: 'smooth' });
-        document.getElementById('sec4').classList.add('hide');
-        document.getElementById('sec5').classList.remove('hide');
       } else {
         msg.textContent = 'La monja sigue rezando. Mirad entre las sombras y las bolsas.';
       }
