@@ -17,6 +17,7 @@
       </div>
     </header>
     <div id="timer-container">
+      <span id="team-display"></span> 
       <span id="timer-label">Tiempo:</span>
       <span id="timer">00:00</span>
     </div>
@@ -105,14 +106,19 @@ Si cada noche los muertos se levantan y duplican su número,
       <div class="panel section" id="sec5">
         <h3>🔔 Final — Regreso al punto de inicio</h3>
         <div class="prompt">Regresad al punto donde todo empezó. Allí confirmaré vuestro tiempo.</div>
-        <p class="small">Cuando lleguéis al inicio, pulsa el botón de abajo. Guarda una foto de la moneda si quieres
-          conservarla.</p>
-        <div style="margin-top:8px">
+        <p class="small">Cuando lleguéis al inicio, pulsa el botón de abajo.</p>
+        <div style="margin-top:8px; margin-bottom: 20px;">
           <button onclick="finishRun()">He regresado al inicio — marcar tiempo</button>
         </div>
-        <div id="finalMsg" class="result hide"></div>
+        <div id="finalResultDisplay" style="text-align: center; display: none; padding: 20px; border: 2px solid var(--accent); border-radius: 10px; background: rgba(179, 51, 51, 0.1);">
+            <p style="font-size: 24px; color: var(--muted); margin-bottom: 5px;">¡Felicidades, equipo!</p>
+            <h4 id="finalTeamName" style="font-size: 36px; color: #fff; margin: 0;"></h4>
+            <h1 id="finalTimeDisplay" style="font-size: 80px; color: var(--accent); margin: 10px 0;">00:00:00</h1>
+            <p id="finalHintPenalty" style="font-size: 20px; color: var(--muted);"></p>
+        </div>
+        
       </div>
-
+      
     </div>
 
     <footer>Diseñado para <strong>La Noche de los Susurros en Huércal</strong> — versión móvil. Mantén el móvil en
@@ -120,17 +126,15 @@ Si cada noche los muertos se levantan y duplican su número,
   </div>
 
   <script>
-    // Simple client-side app: timer, hints, answer checks, local results store
+    // Simple client-side app: timer, hints, answer checks
     let startTs = null;
     let elapsedBefore = 0; // ms
     let timerInterval = null;
     let hintsUsed = 0;
     let teamName = '';
 
-    const sections = ['sec1','sec2','sec3','sec3','sec4','sec5'];
-
     const correct = {
-      1: ['rojo, blanco, verde', 'rojo,blanco,verde', 'rojo blanco verde'], // adjust if you want
+      1: ['rojo, blanco, verde', 'rojo,blanco,verde', 'rojo blanco verde'], 
       2: '13',
       3: '24'
     };
@@ -159,18 +163,15 @@ Si cada noche los muertos se levantan y duplican su número,
       alert('Pista utilizada. Penalización: 2 minutos en el tiempo final.');
     }
 
-    // 🔹 Función para avanzar a la siguiente sección
+    // Función para avanzar a la siguiente sección
     function goToNextSection(currentSectionId) {
-        // Asume sec1, sec2, sec3, sec4, sec5
         const currentId = currentSectionId.replace('sec', '');
         const nextId = parseInt(currentId, 10) + 1;
         const nextSectionId = 'sec' + nextId;
 
-        // Ocultar la sección actual
         const currentEl = document.getElementById(currentSectionId);
         if (currentEl) currentEl.style.display = 'none';
 
-        // Mostrar la siguiente sección y hacer scroll
         const nextEl = document.getElementById(nextSectionId);
         if (nextEl) {
             nextEl.style.display = 'block';
@@ -179,7 +180,7 @@ Si cada noche los muertos se levantan y duplican su número,
     }
 
 
-// 🔹 Oculta todas las secciones al cargar la página
+// Oculta todas las secciones al cargar la página
 window.addEventListener('DOMContentLoaded', () => {
   const sections = ['sec1', 'sec2', 'sec3', 'sec4', 'sec5'];
   sections.forEach(id => {
@@ -188,7 +189,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// 🔹 Al pulsar “Comenzar ritual”
+// Al pulsar “Comenzar ritual”
 function btnStartClick() {
   const teamNameInput = document.getElementById('teamName');
   teamName = (teamNameInput && teamNameInput.value.trim()) || 'Equipo sin nombre';
@@ -196,6 +197,12 @@ function btnStartClick() {
   if (!teamName) {
     alert('Introduce el nombre del equipo.');
     return;
+  }
+  
+  // Muestra el nombre del equipo
+  const teamDisplay = document.getElementById('team-display');
+  if (teamDisplay) {
+    teamDisplay.innerHTML = `<strong>${teamName}</strong>`;
   }
 
   // Oculta panel inicial
@@ -206,7 +213,7 @@ function btnStartClick() {
   const flow = document.getElementById('flow');
   if (flow) flow.classList.remove('hide');
 
-  // 🔹 Asegura que solo la primera sección esté visible
+  // Asegura que solo la primera sección esté visible
 ['sec1','sec2','sec3','sec4','sec5'].forEach((id, i) => {
   const el = document.getElementById(id);
   if (el) el.style.display = (i === 0 ? 'block' : 'none');
@@ -229,7 +236,6 @@ function btnStartClick() {
 
     function check1() {
       const val = document.getElementById('ans1').value.toLowerCase().trim();
-      // Asegura que se compara sin espacios internos para mayor tolerancia
       const ok = correct[1].includes(val.replace(/\s/g, ''));
       const msg = document.getElementById('msg1');
       if (ok) {
@@ -283,17 +289,26 @@ function btnStartClick() {
       const now = Date.now();
       const raw = (now - startTs + elapsedBefore - hintsUsed * 120000);
       const finalTime = formatTime(raw);
-      const out = { team: teamName, time: finalTime, hintsUsed, date: new Date().toISOString() };
-      // store locally in browser
-      const data = JSON.parse(localStorage.getItem('susurros_runs') || '[]');
-      data.push(out);
-      localStorage.setItem('susurros_runs', JSON.stringify(data));
-      const fm = document.getElementById('finalMsg');
-      fm.classList.remove('hide');
-      fm.innerHTML = `<strong>Tiempo marcado:</strong> ${finalTime} <br><small>Penalización por pistas: ${hintsUsed} x 2 min</small><pre style="margin-top:8px">Guarda este código si quieres probar verificable: ${btoa(JSON.stringify(out)).slice(0, 12)}</pre>`;
+      
+      // 1. Mostrar el resultado final en la sección 5
+      document.getElementById('finalTeamName').textContent = teamName;
+      document.getElementById('finalTimeDisplay').textContent = finalTime;
+      document.getElementById('finalHintPenalty').textContent = `Pistas utilizadas: ${hintsUsed} (Penalización: ${hintsUsed * 2} min)`;
+      document.getElementById('finalResultDisplay').style.display = 'block';
+
+      // 2. Opcional: Almacenar localmente el resultado (si desea guardar un historial personal)
+      // const out = { team: teamName, time: finalTime, rawTimeMs: raw, hintsUsed, date: new Date().toISOString() };
+      // const data = JSON.parse(localStorage.getItem('susurros_runs') || '[]');
+      // data.push(out);
+      // localStorage.setItem('susurros_runs', JSON.stringify(data));
+      
+      // 3. Ocultar el botón para no marcar el tiempo varias veces
+      const finishButton = document.querySelector('#sec5 button');
+      if (finishButton) finishButton.style.display = 'none';
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
+    
     // start button
     document.getElementById('btnStart').addEventListener('click', btnStartClick);
     // hint general

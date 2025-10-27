@@ -141,34 +141,34 @@
       border: 1px solid rgba(255, 255, 255, 0.02)
     }
 
-#timer-container {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: rgba(0, 0, 0, 0.7);
-  color: #e0d4b7;
-  font-family: 'Blackadder ITC', cursive;
-  font-size: 22px;
-  padding: 10px 18px;
-  border: 1px solid #b00000;
-  border-radius: 10px;
-  text-align: center;
-  z-index: 9999;
-}
+    #timer-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      color: #e0d4b7;
+      font-family: 'Blackadder ITC', cursive;
+      font-size: 22px;
+      padding: 10px 18px;
+      border: 1px solid #b00000;
+      border-radius: 10px;
+      text-align: center;
+      z-index: 9999;
+    }
 
-#timer-label {
-  display: block;
-  font-size: 16px;
-  color: #ccc;
-  margin-bottom: 4px;
-}
+    #timer-label {
+      display: block;
+      font-size: 16px;
+      color: #ccc;
+      margin-bottom: 4px;
+    }
 
-#timer {
-  display: block;
-  font-size: 28px;
-  color: #fff;
-  letter-spacing: 2px;
-}
+    #timer {
+      display: block;
+      font-size: 28px;
+      color: #fff;
+      letter-spacing: 2px;
+    }
 
 
     .result {
@@ -196,4 +196,16 @@
       padding: 8px;
       border-radius: 8px;
       cursor: pointer
+    }
+
+    /* 🔹 Estilo para el nombre del equipo dentro del contenedor del temporizador */
+    #team-display {
+      display: block;
+      /* Para que ocupe toda la línea */
+      font-size: 20px;
+      /* Un poco más pequeño que el tiempo */
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #e0d4b7;
+      /* Mismo color que el temporizador */
     }
