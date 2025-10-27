@@ -64,7 +64,7 @@
       </div>
       <div class="controls">
         <button id="btnStart">Comenzar el ritual</button>
-        <button id="btnHint" class="hintBtn" onclick="useHint()">Pedir pista (-2 min)</button>
+        <!-- <button id="btnHint" class="hintBtn" onclick="useHint()">Pedir pista (suma 2 min)</button> -->
       </div>
       <div class="status" id="status">Pulsa <strong>Comenzar el ritual</strong> para iniciar el cronómetro y desbloquear
         la primera prueba.</div>
@@ -113,7 +113,7 @@
           azul, verde...)</label> <input id="ans1" type="text" autocomplete="off" />
         <div style="margin-top:8px">
           <button onclick="check1()">Enviar respuesta</button>
-          <button class="hintBtn" onclick="showHint(1)">Pista (-2 min)</button>
+          <button class="hintBtn" onclick="showHint(1)">Pista (Suma 2 min)</button>
         </div>
         <div id="msg1" class="small" style="margin-top:8px;color:#f2f2f2"></div>
         <div id="hint1" class="hint-message"
@@ -136,7 +136,7 @@
         <input id="ans2" type="text" autocomplete="off" />
         <div style="margin-top:8px">
           <button onclick="check2()">Enviar respuesta</button>
-          <button class="hintBtn" onclick="showHint(2)">Pista (-2 min)</button>
+          <button class="hintBtn" onclick="showHint(2)">Pista (Suma 2 min)</button>
         </div>
         <div id="msg2" class="small" style="margin-top:8px;color:#f2f2f2"></div>
         <div id="reward2" class="result hide"></div>
@@ -172,7 +172,7 @@ Si cada noche los muertos se levantan y duplican su número,
         <input id="ans3" type="text" autocomplete="off" />
         <div style="margin-top:8px">
           <button onclick="check3()">Enviar respuesta</button>
-          <button class="hintBtn" onclick="showHint(3)">Pista (-2 min)</button>
+          <button class="hintBtn" onclick="showHint(3)">Pista (Suma 2 min)</button>
         </div>
         <div id="msg3" class="small" style="margin-top:8px;color:#f2f2f2"></div>
         <div id="reward3" class="result hide"></div>
@@ -252,7 +252,7 @@ Si cada noche los muertos se levantan y duplican su número,
       startTs = Date.now();
       timerInterval = setInterval(() => {
         const now = Date.now();
-        document.getElementById('timer').textContent = formatTime(now - startTs + elapsedBefore - hintsUsed * 120000);
+        document.getElementById('timer').textContent = formatTime(now - startTs + elapsedBefore + hintsUsed * 120000);
       }, 250);
     }
 
@@ -327,41 +327,41 @@ Si cada noche los muertos se levantan y duplican su número,
       });
     });
 
-    // ----------------------------------------------------
-    // Al pulsar “Comenzar ritual”
-    // ----------------------------------------------------
-    function btnStartClick() {
-      const teamNameInput = document.getElementById('teamName');
-      teamName = (teamNameInput && teamNameInput.value.trim()) || 'Equipo sin nombre';
+// ----------------------------------------------------
+// Al pulsar “Comenzar ritual”
+// ----------------------------------------------------
+function btnStartClick() {
+  const teamNameInput = document.getElementById('teamName');
+  teamName = (teamNameInput && teamNameInput.value.trim()) || ''; // Asignamos cadena vacía si no hay valor
 
-      if (!teamName) {
-        alert('Introduce el nombre del equipo.');
-        return;
-      }
+  if (!teamName) {
+    alert('⚠️ ¡Debes introducir el nombre del equipo para comenzar el ritual!');
+    return; // Detiene la ejecución si el nombre está vacío
+  }
+  
+  const teamDisplay = document.getElementById('team-display');
+  if (teamDisplay) {
+    teamDisplay.textContent = teamName;
+  }
 
-      const teamDisplay = document.getElementById('team-display');
-      if (teamDisplay) {
-        teamDisplay.textContent = teamName;
-      }
+  const startPanel = document.getElementById('startPanel');
+  if (startPanel) startPanel.style.display = 'none';
 
-      const startPanel = document.getElementById('startPanel');
-      if (startPanel) startPanel.style.display = 'none';
+  const flow = document.getElementById('flow');
+  if (flow) flow.classList.remove('hide');
 
-      const flow = document.getElementById('flow');
-      if (flow) flow.classList.remove('hide');
+  ['sec0','sec1','sec2','sec3','sec4','sec5'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = (i === 0 ? 'block' : 'none');
+  });
 
-      ['sec0', 'sec1', 'sec2', 'sec3', 'sec4', 'sec5'].forEach((id, i) => {
-        const el = document.getElementById(id);
-        if (el) el.style.display = (i === 0 ? 'block' : 'none');
-      });
+  if (typeof startTimer === 'function') startTimer();
 
-      if (typeof startTimer === 'function') startTimer();
-
-      const status = document.getElementById('status');
-      if (status) {
-        status.textContent = 'El cronómetro ha comenzado. Seguid las pistas y completad las pruebas.';
-      }
-    }
+  const status = document.getElementById('status');
+  if (status) {
+    status.textContent = 'El cronómetro ha comenzado. Seguid las pistas y completad las pruebas.';
+  }
+}
 
     // ----------------------------------------------------
     // Check 0 (Cortijo Moreno)
@@ -492,7 +492,7 @@ Si cada noche los muertos se levantan y duplican su número,
       if (countdownInterval) clearInterval(countdownInterval);
 
       const now = Date.now();
-      const raw = (now - startTs + elapsedBefore - hintsUsed * 120000);
+      const raw = (now - startTs + elapsedBefore + hintsUsed * 120000);
       const finalTime = formatTime(raw);
 
       // Ocultar el timer fijo de la esquina
