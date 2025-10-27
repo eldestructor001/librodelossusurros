@@ -142,9 +142,6 @@
     }
 
     #timer-container {
-      position: fixed;
-      top: 15px;
-      right: 20px;
       background: rgba(0, 0, 0, 0.6);
       color: #e0d4b7;
       font-family: 'Blackadder ITC', cursive;
