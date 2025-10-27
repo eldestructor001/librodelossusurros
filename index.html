@@ -33,12 +33,36 @@
       <div class="controls">
         <button id="btnStart">Comenzar el ritual</button>
         <button id="btnHint" class="hintBtn">Pedir pista (-2 min)</button>
-        </div>
+      </div>
       <div class="status" id="status">Pulsa <strong>Comenzar el ritual</strong> para iniciar el cronómetro y desbloquear
         la primera prueba.</div>
     </div>
 
     <div id="flow" class="hide">
+        
+        <div class="panel section" id="sec0">
+            <h3>📜 La Voz de la Noche</h3>
+            <div class="prompt">
+                <div style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: left; line-height: 1.2;">
+                    <p style="margin: 0;">Esta noche, las almas de Huércal de Almería buscan su voz.</p>
+                    <p style="margin: 0;">Cuatro guardianes os esperan.</p>
+                    <p style="margin: 0 0 15px 0;">Completad el Libro de los Susurros antes de la media noche... </p>
+                    <p style="margin: 0;">O su eco os arrastrará al olvido.</p>
+                </div>
+                
+                <hr style="border-color: rgba(255, 255, 255, 0.1); margin: 15px 0;">
+                
+                <p class="small" style="font-family: 'Blackadder ITC', cursive; color: var(--muted); text-align: right; line-height: 1.5;">
+                    El eco del pasado aún susurra entre muros dormidos.<br>
+                    Donde el viento se enreda con la tierra morena,<br>
+                    una voz antigua aguarda entre sombras y polvo.<br>
+                    Allí hallarás a quien ve lo que otros temen mirar
+                </p>
+            </div>
+            <div style="margin-top:20px; text-align: right;">
+                <button onclick="goToNextSection('sec0')">Encontré al primer guardián</button>
+            </div>
+        </div>
 
       <div class="panel section" id="sec1">
           <h3>🔮 Punto 1 — La Pitonisa (Cortijo Moreno)</h3>
@@ -116,7 +140,6 @@ Si cada noche los muertos se levantan y duplican su número,
             <h1 id="finalTimeDisplay" style="font-size: 80px; color: var(--accent); margin: 10px 0;">00:00:00</h1>
             <p id="finalHintPenalty" style="font-size: 20px; color: var(--muted);"></p>
         </div>
-        
       </div>
       
     </div>
@@ -165,9 +188,17 @@ Si cada noche los muertos se levantan y duplican su número,
 
     // Función para avanzar a la siguiente sección
     function goToNextSection(currentSectionId) {
-        const currentId = currentSectionId.replace('sec', '');
-        const nextId = parseInt(currentId, 10) + 1;
-        const nextSectionId = 'sec' + nextId;
+        let nextSectionId;
+
+        // Caso especial para la nueva sección de introducción
+        if (currentSectionId === 'sec0') {
+            nextSectionId = 'sec1'; // Después de sec0 viene sec1 (La Pitonisa)
+        } else {
+            // Lógica normal de avance (sec1 -> sec2, sec2 -> sec3, etc.)
+            const currentId = currentSectionId.replace('sec', '');
+            const nextId = parseInt(currentId, 10) + 1;
+            nextSectionId = 'sec' + nextId;
+        }
 
         const currentEl = document.getElementById(currentSectionId);
         if (currentEl) currentEl.style.display = 'none';
@@ -182,7 +213,8 @@ Si cada noche los muertos se levantan y duplican su número,
 
 // Oculta todas las secciones al cargar la página
 window.addEventListener('DOMContentLoaded', () => {
-  const sections = ['sec1', 'sec2', 'sec3', 'sec4', 'sec5'];
+  // Ahora también incluimos sec0 en la lista
+  const sections = ['sec0', 'sec1', 'sec2', 'sec3', 'sec4', 'sec5']; 
   sections.forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = 'none';
@@ -213,11 +245,11 @@ function btnStartClick() {
   const flow = document.getElementById('flow');
   if (flow) flow.classList.remove('hide');
 
-  // Asegura que solo la primera sección esté visible
-['sec1','sec2','sec3','sec4','sec5'].forEach((id, i) => {
-  const el = document.getElementById(id);
-  if (el) el.style.display = (i === 0 ? 'block' : 'none');
-});
+  // Muestra la nueva sección inicial (sec0) y oculta el resto
+  ['sec0','sec1','sec2','sec3','sec4','sec5'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = (i === 0 ? 'block' : 'none');
+  });
 
   // Inicia el cronómetro
   if (typeof startTimer === 'function') startTimer();
@@ -228,9 +260,7 @@ function btnStartClick() {
     status.textContent = 'El cronómetro ha comenzado. Seguid las pistas y completad las pruebas.';
   }
 
-  // Enfoca el primer campo si existe
-  const firstInput = document.getElementById('ans1');
-  if (firstInput) firstInput.focus();
+  // No enfocamos el input, ya que la primera sección es solo texto.
 }
 
 
@@ -295,14 +325,8 @@ function btnStartClick() {
       document.getElementById('finalTimeDisplay').textContent = finalTime;
       document.getElementById('finalHintPenalty').textContent = `Pistas utilizadas: ${hintsUsed} (Penalización: ${hintsUsed * 2} min)`;
       document.getElementById('finalResultDisplay').style.display = 'block';
-
-      // 2. Opcional: Almacenar localmente el resultado (si desea guardar un historial personal)
-      // const out = { team: teamName, time: finalTime, rawTimeMs: raw, hintsUsed, date: new Date().toISOString() };
-      // const data = JSON.parse(localStorage.getItem('susurros_runs') || '[]');
-      // data.push(out);
-      // localStorage.setItem('susurros_runs', JSON.stringify(data));
       
-      // 3. Ocultar el botón para no marcar el tiempo varias veces
+      // 2. Ocultar el botón para no marcar el tiempo varias veces
       const finishButton = document.querySelector('#sec5 button');
       if (finishButton) finishButton.style.display = 'none';
 
