@@ -7,7 +7,6 @@
   <title>La Noche de los Susurros en Huércal — Libro Digital</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
   <div class="app" role="application">
     <header>
@@ -17,7 +16,10 @@
         <p class="lead">Sigue las pistas, completa los retos y rompe la maldición antes de medianoche.</p>
       </div>
     </header>
-
+          <div id="timer-container">
+            <span id="timer-label">Tiempo:</span>
+            <span id="timer">00:00</span>
+          </div>
     <div class="panel" id="startPanel">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <div>
@@ -25,10 +27,6 @@
           <input id="teamName" type="text" placeholder="Nombre del equipo (p.ej. Los Valientes)" />
         </div>
         <div style="text-align:right">
-          <div id="timer-container">
-            <span id="timer-label">Tiempo:</span>
-            <span id="timer">00:00</span>
-          </div>
         </div>
       </div>
       <div class="controls">
@@ -44,6 +42,7 @@
     <div id="flow" class="hide">
 
       <!-- Punto 1 Pitonisa -->
+       <section id="punto1" class="hide">
       <div class="panel section" id="sec1">
         <h3>🔮 Punto 1 — La Pitonisa (Cortijo Moreno)</h3>
         <div class="prompt">En el viejo cortijo, una pitonisa contempla una esfera de luz. Su mirada atraviesa el
@@ -58,7 +57,7 @@
         </div>
         <div id="msg1" class="small" style="margin-top:8px;color:#f2f2f2"></div>
       </div>
-
+</section>
       <!-- Punto 2 Motosierra -->
       <div class="panel section" id="sec2">
         <h3>🔪 Punto 2 — Túnel del Eco Carmesí</h3>
