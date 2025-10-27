@@ -209,3 +209,30 @@
       color: #e0d4b7;
       /* Mismo color que el temporizador */
     }
+    
+    /* Estilo para integrar el reproductor de audio en el tema oscuro */
+    .dark-audio-player {
+      width: 100%;
+      margin: 15px 0;
+      /* Fondo para que se integre en el panel */
+      background-color: var(--panel); 
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    /* Intento de forzar el tema oscuro en navegadores basados en WebKit (Chrome, Safari, la mayoría de móviles) */
+    .dark-audio-player::-webkit-media-controls-panel {
+        background-color: var(--paper); /* Usar un color muy oscuro */
+        color: #000000;
+    }
+    
+    /* Color de texto para el tiempo */
+    .dark-audio-player::-webkit-media-controls-current-time-display,
+    .dark-audio-player::-webkit-media-controls-time-remaining-display {
+        color: #080808 !important;
+    }
+    
+    /* Color del botón de reproducción */
+    .dark-audio-player::-webkit-media-controls-play-button {
+        color: var(--accent) !important;
+    }
