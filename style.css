@@ -141,11 +141,20 @@
       border: 1px solid rgba(255, 255, 255, 0.02)
     }
 
-    .timer {
-      font-size: 25px;
-      font-weight: 700;
-      color: #fff
+    #timer-container {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.6);
+      color: #e0d4b7;
+      font-family: 'Blackadder ITC', cursive;
+      font-size: 22px;
+      padding: 8px 16px;
+      border: 1px solid #b00000;
+      border-radius: 10px;
+      z-index: 9999;
     }
+
 
     .result {
       background: rgba(0, 0, 0, 0.3);
