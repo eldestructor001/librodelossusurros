@@ -9,28 +9,32 @@
   <style>
     /* Estilo adicional para el cronómetro fijo */
     #timer-container {
-      margin-top: 15px; /* Ajuste para la nueva posición */
+      margin-top: 15px;
+      /* Ajuste para la nueva posición */
     }
-    
+
     /* Adaptación para la sección final del tiempo en grande */
     #finalResultDisplay {
-        font-family: 'Blackadder ITC', cursive;
+      font-family: 'Blackadder ITC', cursive;
     }
 
     /* Clases para aplicar estilos de fuente y tamaño en sec0 si no se cargan correctamente in-line */
     .blackadder-white-left {
-        font-family: 'Blackadder ITC', cursive; 
-        color: #fff; 
-        text-align: left; 
-        line-height: 1.2;
-        font-size: 22px; /* Adaptado para móvil */
+      font-family: 'Blackadder ITC', cursive;
+      color: #fff;
+      text-align: left;
+      line-height: 1.2;
+      font-size: 22px;
+      /* Adaptado para móvil */
     }
+
     .blackadder-gray-right {
-        font-family: 'Blackadder ITC', cursive; 
-        color: var(--muted); 
-        text-align: right; 
-        line-height: 1.5; 
-        font-size: 18px; /* Adaptado para móvil y más pequeño que el principal */
+      font-family: 'Blackadder ITC', cursive;
+      color: var(--muted);
+      text-align: right;
+      line-height: 1.5;
+      font-size: 18px;
+      /* Adaptado para móvil y más pequeño que el principal */
     }
   </style>
 </head>
@@ -43,12 +47,12 @@
         <p class="lead">Sigue las pistas, completa los retos y rompe la maldición antes de medianoche.</p>
       </div>
       <div id="timer-container">
-        <span id="team-display" style="font-size: 20px; color: #fff; margin-bottom: 5px; display: block;"></span> 
+        <span id="team-display" style="font-size: 20px; color: #fff; margin-bottom: 5px; display: block;"></span>
         <span id="timer-label">Tiempo:</span>
         <span id="timer">00:00</span>
       </div>
     </header>
-    
+
     <div class="panel" id="startPanel">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <div>
@@ -67,53 +71,66 @@
     </div>
 
     <div id="flow" class="hide">
-        
-        <div class="panel section" id="sec0">
-            <h3>📜 La Voz de la Noche</h3>
-            <div class="prompt">
-                <div class="blackadder-white-left" style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: left; line-height: 1.2;">
-                    <p style="margin: 0; font-size: 22px;">Esta noche, las almas de Huércal de Almería buscan su voz.</p>
-                    <p style="margin: 0; font-size: 22px;">Cuatro guardianes os esperan.</p>
-                    <p style="margin: 0 0 15px 0; font-size: 22px;">Completad el Libro de los Susurros antes de la media noche... </p>
-                    <p style="margin: 0; font-size: 22px;">O su eco os arrastrará al olvido.</p>
-                </div>
-                
-                <hr style="border-color: rgba(255, 255, 255, 0.1); margin: 15px 0;">
-                
-                <p class="blackadder-gray-right" style="font-family: 'Blackadder ITC', cursive; color: var(--muted); text-align: right; line-height: 1.5; font-size: 18px;">
-                    El eco del pasado aún susurra entre muros dormidos.<br>
-                    Donde el viento se enreda con la tierra morena,<br>
-                    una voz antigua aguarda entre sombras y polvo.<br>
-                    Allí hallarás a quien ve lo que otros temen mirar
-                </p>
-            </div>
-            
-            <label>Escribe la ubicación del primer guardián (p.ej. Cortijo Moreno)</label>
-            <input id="ans0" type="text" autocomplete="off" />
-            
-            <div style="margin-top:20px; text-align: right;">
-                <button onclick="check0()">Encontré al primer guardián</button>
-            </div>
-            <div id="msg0" class="small" style="margin-top:8px;color:#f2f2f2"></div>
+
+      <div class="panel section" id="sec0">
+        <h3>📜 La Voz de la Noche</h3>
+        <div class="prompt">
+          <div class="blackadder-white-left"
+            style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: left; line-height: 1.2;">
+            <p style="margin: 0; font-size: 22px;">Esta noche, las almas de Huércal de Almería buscan su voz.</p>
+            <p style="margin: 0; font-size: 22px;">Cuatro guardianes os esperan.</p>
+            <p style="margin: 0 0 15px 0; font-size: 22px;">Completad el Libro de los Susurros antes de la media
+              noche... </p>
+            <p style="margin: 0; font-size: 22px;">O su eco os arrastrará al olvido.</p>
+          </div>
+
+          <hr style="border-color: rgba(255, 255, 255, 0.1); margin: 15px 0;">
+
+          <p class="blackadder-gray-right"
+            style="font-family: 'Blackadder ITC', cursive; color: var(--muted); text-align: right; line-height: 1.5; font-size: 18px;">
+            El eco del pasado aún susurra entre muros dormidos.<br>
+            Donde el viento se enreda con la tierra morena,<br>
+            una voz antigua aguarda entre sombras y polvo.<br>
+            Allí hallarás a quien ve lo que otros temen mirar
+          </p>
         </div>
 
-      <div class="panel section" id="sec1">
-          <h3>🔮 Punto 1 — La Pitonisa</h3> <div class="prompt">En el viejo cortijo, una pitonisa contempla una esfera de luz. Su mirada atraviesa el
-            tiempo, pero solo si sois capaces de ver lo que ella ve.</div>
-          <p class="small">Tres caminos muestran vuestro destino: la sangre, la pureza o el vacío. Solo uno revela el camino a seguir… escríbelo, y hallarás el camino al siguiente guardián.</p> <label>Respuesta (Rojo, blanco, azul, verde...)</label> <input id="ans1" type="text" autocomplete="off" />
-          <div style="margin-top:8px">
-            <button onclick="check1()">Enviar respuesta</button>
-            <button class="hintBtn" onclick="showHint(1)">Pista (-2 min)</button>
-          </div>
-          <div id="msg1" class="small" style="margin-top:8px;color:#f2f2f2"></div>
-          <div id="hint1" class="hint-message" style="display: none; font-family: 'Blackadder ITC', cursive; color: var(--accent);"></div>
+        <label>Escribe la ubicación del primer guardián (p.ej. Cortijo Moreno)</label>
+        <input id="ans0" type="text" autocomplete="off" />
+
+        <div style="margin-top:20px; text-align: right;">
+          <button onclick="check0()">Encontré al primer guardián</button>
         </div>
+        <div id="msg0" class="small" style="margin-top:8px;color:#f2f2f2"></div>
+      </div>
+
+      <div class="panel section" id="sec1">
+        <h3>🔮 Punto 1 — La Pitonisa</h3>
+        <div class="prompt">En el viejo cortijo, una pitonisa contempla una esfera de luz. Su mirada atraviesa el
+          tiempo, pero solo si sois capaces de ver lo que ella ve.</div>
+        <p class="small">Tres caminos muestran vuestro destino: la sangre, la pureza o el vacío. Solo uno revela el
+          camino a seguir… escríbelo, y hallarás el camino al siguiente guardián.</p> <label>Respuesta (Rojo, blanco,
+          azul, verde...)</label> <input id="ans1" type="text" autocomplete="off" />
+        <div style="margin-top:8px">
+          <button onclick="check1()">Enviar respuesta</button>
+          <button class="hintBtn" onclick="showHint(1)">Pista (-2 min)</button>
+        </div>
+        <div id="msg1" class="small" style="margin-top:8px;color:#f2f2f2"></div>
+        <div id="hint1" class="hint-message"
+          style="display: none; font-family: 'Blackadder ITC', cursive; color: var(--accent);"></div>
+      </div>
       <div class="panel section" id="sec2">
         <h3>🔪 Punto 2 — Túnel del Eco Carmesí</h3>
         <div class="prompt">
-             <p class="blackadder-gray-left" style="font-family: 'Blackadder ITC', cursive; color: var(--muted); text-align: left; margin: 5px 0; font-size: 20px;">Mi voz retumba en piedra y metal, solo el eco sabrá si hablas bien o mal</p>
-             <p class="blackadder-white-right" style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: right; margin: 5px 0; font-size: 20px;">¡Para seguir con vida, tendréis que demostrar que el miedo no os hace torpes!</p>
-             <p class="blackadder-gray-left" style="font-family: 'Blackadder ITC', cursive; color: var(--muted); text-align: left; margin: 5px 0; font-size: 20px;">Si encontráis el número correcto en este túnel, os daré el camino al muerto que despierta...</p>
+          <p class="blackadder-gray-left"
+            style="font-family: 'Blackadder ITC', cursive; color: var(--muted); text-align: left; margin: 5px 0; font-size: 20px;">
+            Mi voz retumba en piedra y metal, solo el eco sabrá si hablas bien o mal</p>
+          <p class="blackadder-white-right"
+            style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: right; margin: 5px 0; font-size: 20px;">
+            ¡Para seguir con vida, tendréis que demostrar que el miedo no os hace torpes!</p>
+          <p class="blackadder-gray-left"
+            style="font-family: 'Blackadder ITC', cursive; color: var(--muted); text-align: left; margin: 5px 0; font-size: 20px;">
+            Si encontráis el número correcto en este túnel, os daré el camino al muerto que despierta...</p>
         </div>
         <label>Introduce el número que has encontrado en la pared del túnel</label>
         <input id="ans2" type="text" autocomplete="off" />
@@ -123,18 +140,29 @@
         </div>
         <div id="msg2" class="small" style="margin-top:8px;color:#f2f2f2"></div>
         <div id="reward2" class="result hide"></div>
-        <div id="hint2" class="hint-message" style="display: none; font-family: 'Blackadder ITC', cursive; color: var(--accent);"></div>
+        <div id="hint2" class="hint-message"
+          style="display: none; font-family: 'Blackadder ITC', cursive; color: var(--accent);"></div>
       </div>
 
       <div class="panel section" id="sec3">
-        <h3>🧟 Punto 3 — El Silencio del Muerto</h3> <div class="prompt">
-            <p class="blackadder-white-left" style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: left; margin: 5px 0; font-size: 20px;">El muerto te mira con ojos huecos.</p>
-            <p class="blackadder-white-left" style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: left; margin: 5px 0; font-size: 20px;">Su voz no pide cerebro, sino redención</p>
-            <p class="blackadder-white-left" style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: left; margin: 5px 0; font-size: 20px;">Cuando su acertijo se resuelve, deja una pista</p>
-            <p class="blackadder-white-left" style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: left; margin: 5px 0; font-size: 20px;">que apunta al siguiente destino</p>
+        <h3>🧟 Punto 3 — El Silencio del Muerto</h3>
+        <div class="prompt">
+          <p class="blackadder-white-left"
+            style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: left; margin: 5px 0; font-size: 20px;">
+            El muerto te mira con ojos huecos.</p>
+          <p class="blackadder-white-left"
+            style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: left; margin: 5px 0; font-size: 20px;">
+            Su voz no pide cerebro, sino redención</p>
+          <p class="blackadder-white-left"
+            style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: left; margin: 5px 0; font-size: 20px;">
+            Cuando su acertijo se resuelve, deja una pista</p>
+          <p class="blackadder-white-left"
+            style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: left; margin: 5px 0; font-size: 20px;">
+            que apunta al siguiente destino</p>
         </div>
         <p class="small">Acertijo (resuelve en voz alta o escribe el número):</p>
-        <pre style="background:rgba(0,0,0,0.3);padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.02)">Tres tumbas hay en el campo,
+        <pre
+          style="white-space: pre-wrap; background:rgba(0,0,0,0.3);padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.02)">Tres tumbas hay en el campo,
 en una descansa un alma, en otra dos,
 y la tercera espera al siguiente grupo.
 
@@ -148,11 +176,13 @@ Si cada noche los muertos se levantan y duplican su número,
         </div>
         <div id="msg3" class="small" style="margin-top:8px;color:#f2f2f2"></div>
         <div id="reward3" class="result hide"></div>
-        <div id="hint3" class="hint-message" style="display: none; font-family: 'Blackadder ITC', cursive; color: var(--accent);"></div>
+        <div id="hint3" class="hint-message"
+          style="display: none; font-family: 'Blackadder ITC', cursive; color: var(--accent);"></div>
       </div>
 
       <div class="panel section" id="sec4">
-        <h3>⛓️ Punto 4 — La Monja del Silencio</h3> <div class="prompt">Detrás de los barrotes la monja reza en la oscuridad. Debéis encontrar el símbolo de
+        <h3>⛓️ Punto 4 — La Monja del Silencio</h3>
+        <div class="prompt">Detrás de los barrotes la monja reza en la oscuridad. Debéis encontrar el símbolo de
           Huércal: una moneda con su escudo, y marcar que la habéis encontrado.</div>
         <p class="small">En el lugar hay una moneda escondida que podréis recuperar. Cuando la tengáis, marcadlo abajo.
         </p>
@@ -163,10 +193,13 @@ Si cada noche los muertos se levantan y duplican su número,
         </div>
         <div id="msg4" class="small" style="margin-top:8px;color:#f2f2f2"></div>
 
-        <div id="finalCountdown" style="display: none; margin-top: 20px; text-align: center; border: 1px solid var(--accent); padding: 15px; border-radius: 8px;">
-            <p style="font-family: 'Blackadder ITC', cursive; font-size: 24px; color: var(--accent); margin: 0;">¡Corred! Debéis volver al parking del teatro multiusos</p>
-            <h2 id="finalTimerDisplay" style="font-size: 48px; color: #fff; margin: 10px 0;">05:00</h2>
-            <button id="btnFinishRitual" onclick="finishRun()" style="display: none; font-family: 'Blackadder ITC', cursive;">Finalizar ritual</button>
+        <div id="finalCountdown"
+          style="display: none; margin-top: 20px; text-align: center; border: 1px solid var(--accent); padding: 15px; border-radius: 8px;">
+          <p style="font-family: 'Blackadder ITC', cursive; font-size: 24px; color: var(--accent); margin: 0;">¡Corred!
+            Debéis volver al parking del teatro multiusos</p>
+          <h2 id="finalTimerDisplay" style="font-size: 48px; color: #fff; margin: 10px 0;">05:00</h2>
+          <button id="btnFinishRitual" onclick="finishRun()"
+            style="display: none; font-family: 'Blackadder ITC', cursive;">Finalizar ritual</button>
         </div>
       </div>
 
@@ -177,14 +210,11 @@ Si cada noche los muertos se levantan y duplican su número,
         <div style="margin-top:8px; margin-bottom: 20px;">
           <button onclick="finishRun()">He regresado al inicio — marcar tiempo</button>
         </div>
-        <div id="finalResultDisplay" style="text-align: center; display: none; padding: 20px; border: 2px solid var(--accent); border-radius: 10px; background: rgba(179, 51, 51, 0.1);">
-            <p style="font-size: 24px; color: var(--muted); margin-bottom: 5px; font-family: 'Blackadder ITC', cursive;">¡Felicidades, equipo!</p>
-            <h4 id="finalTeamName" style="font-size: 36px; color: #fff; margin: 0; font-family: 'Blackadder ITC', cursive;"></h4>
-            <h1 id="finalTimeDisplay" style="font-size: 80px; color: var(--accent); margin: 10px 0; font-family: 'Blackadder ITC', cursive;">00:00:00</h1>
-            <p id="finalHintPenalty" style="font-size: 20px; color: var(--muted); font-family: 'Blackadder ITC', cursive;"></p>
+        <div id="finalResultDisplay"
+          style="text-align: center; display: none; padding: 20px; border: 2px solid var(--accent); border-radius: 10px; background: rgba(179, 51, 51, 0.1);">
         </div>
       </div>
-      
+
     </div>
 
     <footer>Diseñado para <strong>La Noche de los Susurros en Huércal</strong> — versión móvil. Mantén el móvil en
@@ -202,7 +232,7 @@ Si cada noche los muertos se levantan y duplican su número,
 
     const correct = {
       0: ['cortijo moreno', 'cortijomoreno'],
-      1: ['rojo'], 
+      1: ['rojo'],
       2: '13',
       3: '24'
     };
@@ -234,57 +264,57 @@ Si cada noche los muertos se levantan y duplican su número,
       hintsUsed++;
       alert('Pista utilizada. Penalización: 2 minutos en el tiempo final.');
     }
-    
+
     // Función para mostrar la pista con el texto especial
     function showHint(sectionNum) {
-        useHint(); // Penaliza el tiempo
-        let hintText = '';
-        
-        switch(sectionNum) {
-            case 1:
-                hintText = "Del mismo color que este texto y los rubíes";
-                break;
-            case 2:
-                hintText = "Buscad por el túnel, es la única pista";
-                break;
-            case 3:
-                hintText = "el primer amanecer son 6 almas y el segundo 12";
-                break;
-            default:
-                return;
-        }
+      useHint(); // Penaliza el tiempo
+      let hintText = '';
 
-        const hintEl = document.getElementById(`hint${sectionNum}`);
-        if (hintEl) {
-            hintEl.textContent = hintText;
-            hintEl.style.display = 'block';
-            setTimeout(() => {
-                // Opcional: Ocultar la pista después de un tiempo si molesta la interfaz
-            }, 10000); 
-        }
+      switch (sectionNum) {
+        case 1:
+          hintText = "Del mismo color que este texto y los rubíes";
+          break;
+        case 2:
+          hintText = "Buscad por el túnel, es la única pista";
+          break;
+        case 3:
+          hintText = "el primer amanecer son 6 almas y el segundo 12";
+          break;
+        default:
+          return;
+      }
+
+      const hintEl = document.getElementById(`hint${sectionNum}`);
+      if (hintEl) {
+        hintEl.textContent = hintText;
+        hintEl.style.display = 'block';
+        setTimeout(() => {
+          // Opcional: Ocultar la pista después de un tiempo si molesta la interfaz
+        }, 10000);
+      }
     }
 
     // Función para avanzar a la siguiente sección
     function goToNextSection(currentSectionId) {
-        let nextSectionId;
+      let nextSectionId;
 
-        if (currentSectionId === 'sec0') {
-            nextSectionId = 'sec1';
-        } else {
-            const currentId = currentSectionId.replace('sec', '');
-            const nextId = parseInt(currentId, 10) + 1;
-            if (nextId > 4) return;
-            nextSectionId = 'sec' + nextId;
-        }
+      if (currentSectionId === 'sec0') {
+        nextSectionId = 'sec1';
+      } else {
+        const currentId = currentSectionId.replace('sec', '');
+        const nextId = parseInt(currentId, 10) + 1;
+        if (nextId > 4) return;
+        nextSectionId = 'sec' + nextId;
+      }
 
-        const currentEl = document.getElementById(currentSectionId);
-        if (currentEl) currentEl.style.display = 'none';
+      const currentEl = document.getElementById(currentSectionId);
+      if (currentEl) currentEl.style.display = 'none';
 
-        const nextEl = document.getElementById(nextSectionId);
-        if (nextEl) {
-            nextEl.style.display = 'block';
-            nextEl.scrollIntoView({ behavior: 'smooth' });
-        }
+      const nextEl = document.getElementById(nextSectionId);
+      if (nextEl) {
+        nextEl.style.display = 'block';
+        nextEl.scrollIntoView({ behavior: 'smooth' });
+      }
     }
 
 
@@ -308,7 +338,7 @@ Si cada noche los muertos se levantan y duplican su número,
         alert('Introduce el nombre del equipo.');
         return;
       }
-      
+
       const teamDisplay = document.getElementById('team-display');
       if (teamDisplay) {
         teamDisplay.textContent = teamName;
@@ -320,7 +350,7 @@ Si cada noche los muertos se levantan y duplican su número,
       const flow = document.getElementById('flow');
       if (flow) flow.classList.remove('hide');
 
-      ['sec0','sec1','sec2','sec3','sec4','sec5'].forEach((id, i) => {
+      ['sec0', 'sec1', 'sec2', 'sec3', 'sec4', 'sec5'].forEach((id, i) => {
         const el = document.getElementById(id);
         if (el) el.style.display = (i === 0 ? 'block' : 'none');
       });
@@ -332,7 +362,7 @@ Si cada noche los muertos se levantan y duplican su número,
         status.textContent = 'El cronómetro ha comenzado. Seguid las pistas y completad las pruebas.';
       }
     }
-    
+
     // ----------------------------------------------------
     // Check 0 (Cortijo Moreno)
     // ----------------------------------------------------
@@ -354,17 +384,17 @@ Si cada noche los muertos se levantan y duplican su número,
     function check1() {
       const val = document.getElementById('ans1').value.toLowerCase().trim();
       // Solo 'rojo' o 'rojo,blanco,verde' (por si dejan el texto original)
-      const ok = correct[1].includes(val.replace(/\s/g, '').split(',')[0]); 
+      const ok = correct[1].includes(val.replace(/\s/g, '').split(',')[0]);
       const msg = document.getElementById('msg1');
       if (ok) {
-        msg.innerHTML = 'La pitonisa asiente. Pista desbloqueada: id a la entrada del túnel bajo las vías, allí él os espera...' + 
-                        '<div style="margin-top:10px; text-align: right;"><button onclick="goToNextSection(\'sec1\')">Siguiente Guardián</button></div>';
+        msg.innerHTML = 'La pitonisa asiente. Pista desbloqueada: id a la entrada del túnel bajo las vías, allí él os espera...' +
+          '<div style="margin-top:10px; text-align: right;"><button onclick="goToNextSection(\'sec1\')">Siguiente Guardián</button></div>';
         document.getElementById('hint1').style.display = 'none'; // Ocultar pista si existe
       } else {
         msg.textContent = 'La luz vacila: prueba otra vez.';
       }
     }
-    
+
     // ----------------------------------------------------
     // Check 2 (Motosierra)
     // ----------------------------------------------------
@@ -376,14 +406,14 @@ Si cada noche los muertos se levantan y duplican su número,
         const r = document.getElementById('reward2');
         r.classList.remove('hide');
         // Texto con negritas y SUBRAYADO y enlace modificado
-        r.innerHTML = `<strong>Nota encontrada:</strong><pre style="white-space:pre-wrap;margin-top:6px">El trece despierta al muerto,\npero no en el camposanto.\nBúscalo donde la tierra se abre en cicatrices de barro y polvo.\nAllí, entre ruinas y sombras, el silencio camina lento.\n\nTres palabras guardan el secreto del lugar…\n<strong style="color:var(--accent)">quien <u>quiere</u>, quien <u>fueran</u>, quien camina <u>solito</u>.</strong></pre><div style="margin-top:8px"><a class='link' target='_blank' href='https://what3words.com/'>Abrir localización</a></div>` + 
-                      '<div style="margin-top:10px; text-align: right;"><button onclick="goToNextSection(\'sec2\')">Siguiente Guardián</button></div>';
-        document.getElementById('hint2').style.display = 'none'; 
+        r.innerHTML = `<strong>Nota encontrada:</strong><pre style="white-space:pre-wrap;margin-top:6px">El trece despierta al muerto,\npero no en el camposanto.\nBúscalo donde la tierra se abre en cicatrices de barro y polvo.\nAllí, entre ruinas y sombras, el silencio camina lento.\n\nTres palabras guardan el secreto del lugar…\n<strong style="color:var(--accent)">quien <u>quiere</u>, quien <u>fueran</u>, quien camina <u>solito</u>.</strong></pre><div style="margin-top:8px"><a class='link' target='_blank' href='https://what3words.com/'>Abrir localización</a></div>` +
+          '<div style="margin-top:10px; text-align: right;"><button onclick="goToNextSection(\'sec2\')">Siguiente Guardián</button></div>';
+        document.getElementById('hint2').style.display = 'none';
       } else {
         msg.textContent = 'El eco no os da la respuesta. Volved a mirar la pared.';
       }
     }
-    
+
     // ----------------------------------------------------
     // Check 3 (Zombie)
     // ----------------------------------------------------
@@ -395,8 +425,8 @@ Si cada noche los muertos se levantan y duplican su número,
         const r = document.getElementById('reward3');
         r.classList.remove('hide');
         // Nuevo texto sin enlace
-        r.innerHTML = `<strong>Nota del muerto:</strong><pre style="white-space:pre-wrap;margin-top:6px">Cruzando el puente encima de las vías, donde el silencio reza tras los barrotes de la antigua residencia, y la luz parpadea entre oraciones, allí purgarás tus pecados.</pre>` + 
-                      '<div style="margin-top:10px; text-align: right;"><button onclick="goToNextSection(\'sec3\')">Siguiente Guardián</button></div>';
+        r.innerHTML = `<strong>Nota del muerto:</strong><pre style="white-space:pre-wrap;margin-top:6px">Cruzando el puente encima de las vías, donde el silencio reza tras los barrotes de la antigua residencia, y la luz parpadea entre oraciones, allí purgarás tus pecados.</pre>` +
+          '<div style="margin-top:10px; text-align: right;"><button onclick="goToNextSection(\'sec3\')">Siguiente Guardián</button></div>';
         document.getElementById('hint3').style.display = 'none';
       } else {
         msg.textContent = 'El muerto no se conforma. Recalculad los huesos.';
@@ -407,28 +437,28 @@ Si cada noche los muertos se levantan y duplican su número,
     // Timer Final (5 minutos)
     // ----------------------------------------------------
     function startFinalCountdown(durationInSeconds) {
-        let timer = durationInSeconds;
-        const display = document.getElementById('finalTimerDisplay');
-        const finishButton = document.getElementById('btnFinishRitual');
+      let timer = durationInSeconds;
+      const display = document.getElementById('finalTimerDisplay');
+      const finishButton = document.getElementById('btnFinishRitual');
 
-        if (countdownInterval) clearInterval(countdownInterval);
+      if (countdownInterval) clearInterval(countdownInterval);
 
-        countdownInterval = setInterval(() => {
-            const minutes = parseInt(timer / 60, 10);
-            const seconds = parseInt(timer % 60, 10);
+      countdownInterval = setInterval(() => {
+        const minutes = parseInt(timer / 60, 10);
+        const seconds = parseInt(timer % 60, 10);
 
-            const displayTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-            display.textContent = displayTime;
+        const displayTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        display.textContent = displayTime;
 
-            if (--timer < 0) {
-                clearInterval(countdownInterval);
-                display.textContent = "¡Tiempo de vuelta agotado!";
-                // Mantener el botón visible para que puedan finalizar el ritual igualmente
-            }
-        }, 1000);
-        
-        // Mostrar el botón inmediatamente
-        finishButton.style.display = 'block'; 
+        if (--timer < 0) {
+          clearInterval(countdownInterval);
+          display.textContent = "¡Tiempo de vuelta agotado!";
+          // Mantener el botón visible para que puedan finalizar el ritual igualmente
+        }
+      }, 1000);
+
+      // Mostrar el botón inmediatamente
+      finishButton.style.display = 'block';
     }
 
 
@@ -439,15 +469,15 @@ Si cada noche los muertos se levantan y duplican su número,
       const msg = document.getElementById('msg4');
       if (have) {
         msg.textContent = 'La monja suspira. Habéis recuperado el escudo. ¡Rápidamente, regresad al punto de inicio!';
-        
+
         document.getElementById('finalCountdown').style.display = 'block';
-        
+
         // Ocultar los botones "Sí, la tengo" / "Aún no"
         document.querySelector('#sec4 div[style*="display:flex"]').style.display = 'none';
-        
+
         // Iniciar el temporizador de 5 minutos (300 segundos)
         startFinalCountdown(300);
-        
+
       } else {
         msg.textContent = 'La monja sigue rezando. Mirad entre las sombras y las bolsas.';
       }
@@ -455,30 +485,39 @@ Si cada noche los muertos se levantan y duplican su número,
 
 
     // ----------------------------------------------------
-    // Finish Run (Finalización)
+    // Finish Run (Finalización) - MODIFICADO
     // ----------------------------------------------------
     function finishRun() {
       stopTimer();
-      if (countdownInterval) clearInterval(countdownInterval); 
-      
+      if (countdownInterval) clearInterval(countdownInterval);
+
       const now = Date.now();
-      // La penalización por pistas ya está incluida en el cálculo del tiempo
       const raw = (now - startTs + elapsedBefore - hintsUsed * 120000);
       const finalTime = formatTime(raw);
-      
+
       // Ocultar el timer fijo de la esquina
       document.getElementById('timer-container').style.display = 'none';
 
       // Ocultar la sección actual (sec4 o sec5) y mostrar solo sec5
       document.getElementById('sec4').style.display = 'none';
       document.getElementById('sec5').style.display = 'block';
-      
-      // Mostrar el resultado final en grande
-      document.getElementById('finalTeamName').textContent = teamName;
-      document.getElementById('finalTimeDisplay').textContent = finalTime;
-      document.getElementById('finalHintPenalty').textContent = `Pistas utilizadas: ${hintsUsed} (Penalización: ${hintsUsed * 2} min)`;
-      document.getElementById('finalResultDisplay').style.display = 'block';
-      
+
+      // Generar el contenido final (Solo nombre, tiempo e imágenes)
+      const finalResultDisplay = document.getElementById('finalResultDisplay');
+      finalResultDisplay.innerHTML = `
+      <div style="font-family: 'Blackadder ITC', cursive; color: #fff;">
+          <h4 style="font-size: 36px; margin: 0 0 10px 0;">${teamName}</h4>
+          <h1 style="font-size: 80px; color: var(--accent); margin: 0 0 20px 0;">${finalTime}</h1>
+          
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 30px;">
+              <img src="huercal.png" alt="Escudo de Huércal" style="height: 150px; width: auto;">
+              <img src="sincabeza.png" alt="Logo de la Empresa" style="height: 70px; width: auto;">
+          </div>
+          <p style="font-size: 20px; color: var(--muted); margin-top: 20px;">¡Gracias por participar!</p>
+      </div>
+  `;
+      finalResultDisplay.style.display = 'block';
+
       // Ocultar el botón original de finishRun
       const finishButton = document.querySelector('#sec5 button');
       if (finishButton) finishButton.style.display = 'none';
