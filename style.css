@@ -80,6 +80,7 @@
 
     button {
       background: var(--accent);
+      font-family: 'Blackadder ITC', 'Cinzel', serif;
       border: none;
       color: white;
       font-size: 20px;
