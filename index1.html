@@ -11,6 +11,7 @@
 <body>
   <div class="app" role="application">
     <header>
+      <!-- <div class="logo">SUSURROS</div> -->
       <div>
         <h1>La Noche de los Susurros en Huércal</h1>
         <p class="lead">Sigue las pistas, completa los retos y rompe la maldición antes de medianoche.</p>
@@ -32,14 +33,17 @@
       <div class="controls">
         <button id="btnStart">Comenzar el ritual</button>
         <button id="btnHint" class="hintBtn">Pedir pista (-2 min)</button>
-        </div>
+        <!-- <div style="margin-left:auto" class="small">Público — Guarda resultados localmente</div> -->
+      </div>
       <div class="status" id="status">Pulsa <strong>Comenzar el ritual</strong> para iniciar el cronómetro y desbloquear
         la primera prueba.</div>
     </div>
 
+    <!-- Section template -->
     <div id="flow" class="hide">
 
-      <div class="panel section" id="sec1">
+      <!-- Punto 1 Pitonisa -->
+        <div class="panel section" id="sec1">
           <h3>🔮 Punto 1 — La Pitonisa (Cortijo Moreno)</h3>
           <div class="prompt">En el viejo cortijo, una pitonisa contempla una esfera de luz. Su mirada atraviesa el
             tiempo, pero solo si sois capaces de ver lo que ella ve.</div>
@@ -53,6 +57,7 @@
           </div>
           <div id="msg1" class="small" style="margin-top:8px;color:#f2f2f2"></div>
         </div>
+      <!-- Punto 2 Motosierra -->
       <div class="panel section" id="sec2">
         <h3>🔪 Punto 2 — Túnel del Eco Carmesí</h3>
         <div class="prompt">El rugido del metal resuena en la oscuridad del túnel. Solo quien descubra el número maldito
@@ -67,6 +72,7 @@
         <div id="reward2" class="result hide"></div>
       </div>
 
+      <!-- Punto 3 Zombie -->
       <div class="panel section" id="sec3">
         <h3>🧟 Punto 3 — El Silencio del Muerto (quiere.fueran.solito)</h3>
         <div class="prompt">El aire huele a tierra húmeda. Un cuerpo se levanta con el sonido hueco del hambre y la
@@ -88,6 +94,7 @@ Si cada noche los muertos se levantan y duplican su número,
         <div id="reward3" class="result hide"></div>
       </div>
 
+      <!-- Punto 4 Monja -->
       <div class="panel section" id="sec4">
         <h3>⛓️ Punto 4 — La Monja del Silencio (Centro Social José Guirado)</h3>
         <div class="prompt">Detrás de los barrotes la monja reza en la oscuridad. Debéis encontrar el símbolo de
@@ -102,6 +109,7 @@ Si cada noche los muertos se levantan y duplican su número,
         <div id="msg4" class="small" style="margin-top:8px;color:#f2f2f2"></div>
       </div>
 
+      <!-- Final -->
       <div class="panel section" id="sec5">
         <h3>🔔 Final — Regreso al punto de inicio</h3>
         <div class="prompt">Regresad al punto donde todo empezó. Allí confirmaré vuestro tiempo.</div>
@@ -127,7 +135,7 @@ Si cada noche los muertos se levantan y duplican su número,
     let hintsUsed = 0;
     let teamName = '';
 
-    const sections = ['sec1','sec2','sec3','sec3','sec4','sec5'];
+    const sections = ['sec1','sec2','sec3','sec4','sec5'];
 
     const correct = {
       1: ['rojo, blanco, verde', 'rojo,blanco,verde', 'rojo blanco verde'], // adjust if you want
@@ -159,26 +167,6 @@ Si cada noche los muertos se levantan y duplican su número,
       alert('Pista utilizada. Penalización: 2 minutos en el tiempo final.');
     }
 
-    // 🔹 Función para avanzar a la siguiente sección
-    function goToNextSection(currentSectionId) {
-        // Asume sec1, sec2, sec3, sec4, sec5
-        const currentId = currentSectionId.replace('sec', '');
-        const nextId = parseInt(currentId, 10) + 1;
-        const nextSectionId = 'sec' + nextId;
-
-        // Ocultar la sección actual
-        const currentEl = document.getElementById(currentSectionId);
-        if (currentEl) currentEl.style.display = 'none';
-
-        // Mostrar la siguiente sección y hacer scroll
-        const nextEl = document.getElementById(nextSectionId);
-        if (nextEl) {
-            nextEl.style.display = 'block';
-            nextEl.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-
-
 // 🔹 Oculta todas las secciones al cargar la página
 window.addEventListener('DOMContentLoaded', () => {
   const sections = ['sec1', 'sec2', 'sec3', 'sec4', 'sec5'];
@@ -200,7 +188,7 @@ function btnStartClick() {
 
   // Oculta panel inicial
   const startPanel = document.getElementById('startPanel');
-  if (startPanel) startPanel.style.display = 'none';
+  if (startPanel) startPanel.classList.add('hide');
 
   // Muestra el contenedor principal
   const flow = document.getElementById('flow');
@@ -229,12 +217,12 @@ function btnStartClick() {
 
     function check1() {
       const val = document.getElementById('ans1').value.toLowerCase().trim();
-      // Asegura que se compara sin espacios internos para mayor tolerancia
-      const ok = correct[1].includes(val.replace(/\s/g, ''));
+      const ok = correct[1].includes(val);
       const msg = document.getElementById('msg1');
       if (ok) {
-        msg.innerHTML = 'La pitonisa asiente. Pista desbloqueada: id a la entrada del túnel bajo las vías.' + 
-                        '<div style="margin-top:10px; text-align: right;"><button onclick="goToNextSection(\'sec1\')">Siguiente Guardián</button></div>';
+        msg.textContent = 'La pitonisa asiente. Pista desbloqueada: id a la entrada del túnel bajo las vías.';
+        // scroll to next
+        document.getElementById('sec2').scrollIntoView({ behavior: 'smooth' });
       } else {
         msg.textContent = 'La luz vacila: prueba otra vez.';
       }
@@ -247,8 +235,8 @@ function btnStartClick() {
         msg.textContent = 'El hombre de la motosierra se aparta lentamente y os entrega una nota manchada.';
         const r = document.getElementById('reward2');
         r.classList.remove('hide');
-        r.innerHTML = `<strong>Nota encontrada:</strong><pre style="white-space:pre-wrap;margin-top:6px">El trece despierta al muerto,\npero no en el camposanto.\nBúscalo donde la tierra se abre en cicatrices de barro y polvo.\nAllí, entre ruinas y sombras, el silencio camina lento.\n\nTres palabras guardan el secreto del lugar…\nquien quiere, quien fueran, quien camina solito.</pre><div style="margin-top:8px"><a class='link' target='_blank' href='https://what3words.com/quiere.fueran.solito'>Abrir localización</a></div>` + 
-                      '<div style="margin-top:10px; text-align: right;"><button onclick="goToNextSection(\'sec2\')">Siguiente Guardián</button></div>';
+        r.innerHTML = `<strong>Nota encontrada:</strong><pre style="white-space:pre-wrap;margin-top:6px">El trece despierta al muerto,\npero no en el camposanto.\nBúscalo donde la tierra se abre en cicatrices de barro y polvo.\nAllí, entre ruinas y sombras, el silencio camina lento.\n\nTres palabras guardan el secreto del lugar…\nquien quiere, quien fueran, quien camina solito.</pre><div style="margin-top:8px"><a class='link' target='_blank' href='https://what3words.com/quiere.fueran.solito'>Abrir localización</a></div>`;
+        document.getElementById('sec3').scrollIntoView({ behavior: 'smooth' });
       } else {
         msg.textContent = 'El eco no os da la respuesta. Volved a mirar la pared.';
       }
@@ -261,8 +249,8 @@ function btnStartClick() {
         msg.textContent = 'El zombie se retira con un gemido y deja caer una nota.';
         const r = document.getElementById('reward3');
         r.classList.remove('hide');
-        r.innerHTML = `<strong>Nota del muerto:</strong><pre style="white-space:pre-wrap;margin-top:6px">Donde el silencio reza tras los barrotes,\ny la luz parpadea entre oraciones,\nallí purgarás tus pecados.</pre><div style="margin-top:8px"><a class='link' target='_blank' href='https://www.google.com/maps/search/?api=1&query=Centro+Social+Jose+Guirado+Calle+del+Pueblo+36+Hu%C3%A9rcal+de+Almer%C3%ADa'>Ir a Centro Social José Guirado (mapa)</a></div>` + 
-                      '<div style="margin-top:10px; text-align: right;"><button onclick="goToNextSection(\'sec3\')">Siguiente Guardián</button></div>';
+        r.innerHTML = `<strong>Nota del muerto:</strong><pre style="white-space:pre-wrap;margin-top:6px">Donde el silencio reza tras los barrotes,\ny la luz parpadea entre oraciones,\nallí purgarás tus pecados.</pre><div style="margin-top:8px"><a class='link' target='_blank' href='https://www.google.com/maps/search/?api=1&query=Centro+Social+Jose+Guirado+Calle+del+Pueblo+36+Hu%C3%A9rcal+de+Almer%C3%ADa'>Ir a Centro Social José Guirado (mapa)</a></div>`;
+        document.getElementById('sec4').scrollIntoView({ behavior: 'smooth' });
       } else {
         msg.textContent = 'El muerto no se conforma. Recalculad los huesos.';
       }
@@ -271,8 +259,9 @@ function btnStartClick() {
     function foundCoin(have) {
       const msg = document.getElementById('msg4');
       if (have) {
-        msg.innerHTML = 'La monja suspira. Habéis recuperado el escudo. Podéis regresar al inicio.' + 
-                        '<div style="margin-top:10px; text-align: right;"><button onclick="goToNextSection(\'sec4\')">Siguiente Guardián</button></div>';
+        msg.textContent = 'La monja suspira. Habéis recuperado el escudo. Podéis regresar al inicio.';
+        // mark progressed
+        document.getElementById('sec5').scrollIntoView({ behavior: 'smooth' });
       } else {
         msg.textContent = 'La monja sigue rezando. Mirad entre las sombras y las bolsas.';
       }
