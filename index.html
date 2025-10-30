@@ -72,24 +72,93 @@
       border-radius: 10px;
       box-shadow: 0 6px 20px rgba(179, 51, 51, 0.5);
     }
-        /* Modificación para inputs: borde blanco */
-    input[type="text"] {
+
+    /* --- ESTILOS DEL MODAL PERSONALIZADO --- */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
-      padding: 10px;
-      font-size: 24px;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      backdrop-filter: blur(5px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: #18181a;
+      /* Más oscuro que el panel */
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(179, 51, 51, 0.6);
+      transform: scale(0.9);
+      transition: transform 0.3s;
+    }
+
+    .modal-overlay.show .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-message {
       font-family: Inter, sans-serif;
-      border: 2px solid white;
-      /* Borde blanco */
-      background: rgba(255, 255, 255, 0.719);
-      /* Fondo ligeramente transparente */
+      font-size: 20px;
       color: #fff;
-      border-radius: 6px;
-      box-sizing: border-box;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    .modal-title {
+      font-family: 'Blackadder ITC', cursive;
+      font-size: 32px;
+      color: var(--accent);
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+
+    .modal-button {
+      background: var(--accent);
+      border: none;
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      font-family: Inter, sans-serif;
+      font-weight: bold;
+    }
+
+    .modal-button:hover {
+      background: #8c2828;
     }
   </style>
 </head>
 
 <body>
+  <!-- Custom Modal HTML Structure -->
+  <div id="customAlert" class="modal-overlay">
+    <div class="modal-content">
+      <div id="modalTitle" class="modal-title"></div>
+      <div id="modalMessage" class="modal-message"></div>
+      <button class="modal-button" onclick="closeCustomAlert()">Entendido</button>
+    </div>
+  </div>
+
   <div class="app" role="application">
     <header style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
       <div style="flex-grow: 1;">
@@ -176,10 +245,7 @@ y si te giras… ya no hay nada.
           <button class="hintBtn" onclick="showHint(1)">Pista (+2 min)</button>
         </div>
         <div id="msg1" class="small" style="margin-top:8px;color:#f2f2f2"></div>
-        <!-- MODIFICADO: Texto de la pista y estilo -->
-        <div id="hint1" class="hint-message"
-          style="display: none; font-family: 'Blackadder ITC', cursive; color: var(--accent);">Es tuya y la ves todos
-          los días</div>
+        <!-- ELIMINADO: Se quita el div de pista inline, ahora sale en el modal -->
         <div id="reward1" class="result hide"></div>
       </div>
 
@@ -211,9 +277,7 @@ y si te giras… ya no hay nada.
         </div>
         <div id="msg2" class="small" style="margin-top:8px;color:#f2f2f2"></div>
         <div id="reward2" class="result hide"></div>
-        <div id="hint2" class="hint-message"
-          style="display: none; font-family: 'Blackadder ITC', cursive; color: var(--accent);">Buscad por la zona, es la
-          única pista</div>
+        <!-- ELIMINADO: Se quita el div de pista inline, ahora sale en el modal -->
       </div>
 
       <div class="panel section" id="sec3">
@@ -256,9 +320,7 @@ Si cada noche los muertos se levantan y duplican su número,
         </div>
         <div id="msg3" class="small" style="margin-top:8px;color:#f2f2f2"></div>
         <div id="reward3" class="result hide"></div>
-        <div id="hint3" class="hint-message"
-          style="display: none; font-family: 'Blackadder ITC', cursive; color: var(--accent);">el primer amanecer son 6
-          almas y el segundo 12</div>
+        <!-- ELIMINADO: Se quita el div de pista inline, ahora sale en el modal -->
       </div>
 
       <div class="panel section" id="sec4">
@@ -292,40 +354,37 @@ y tres más son consumidas por la angustia.
         </div>
 
         <div id="msg4" class="small" style="margin-top:8px;color:#f2f2f2"></div>
-        <!-- MODIFICADO: Pista actualizada para el nuevo acertijo -->
-        <div id="hint4" class="hint-message"
-          style="display: none; font-family: 'Blackadder ITC', cursive; color: var(--accent);">
-          Cuenta solo las que NO se han apagado o consumido.
-        </div>
+        <!-- ELIMINADO: Se quita el div de pista inline, ahora sale en el modal -->
         <div id="reward4" class="result hide"></div>
       </div>
 
       <!-- NUEVA SECCIÓN: Solo para la cuenta atrás final -->
       <div class="panel section" id="sec_final_countdown">
         <div style="margin-bottom: 15px; text-align: right;">
-            <button class="backBtn" onclick="goToSection('sec0')">← Volver a Selección</button>
+          <button class="backBtn" onclick="goToSection('sec0')">← Volver a Selección</button>
         </div>
         <h3>🔔 Vuelo Final</h3>
         <p style="font-family: 'Blackadder ITC', cursive; font-size: 24px; color: var(--accent); margin: 0;">¡Corred!
           Debéis volver a la plaza del ayuntamiento</p>
-        
-        <div style="border: 2px solid var(--accent); padding: 20px; border-radius: 10px; background: rgba(179, 51, 51, 0.1); margin: 20px 0; text-align: center;">
-            <h2 id="finalTimerDisplay" style="font-size: 60px; color: #fff; margin: 0;">05:00</h2>
-            <p style="font-size: 18px; color: var(--muted); margin: 10px 0 0 0;">Tiempo límite para regresar.</p>
+
+        <div
+          style="border: 2px solid var(--accent); padding: 20px; border-radius: 10px; background: rgba(179, 51, 51, 0.1); margin: 20px 0; text-align: center;">
+          <h2 id="finalTimerDisplay" style="font-size: 60px; color: #fff; margin: 0;">05:00</h2>
+          <p style="font-size: 18px; color: var(--muted); margin: 10px 0 0 0;">Tiempo límite para regresar.</p>
         </div>
-        
+
         <button id="btnFinishRitual" onclick="finishRun()" style="font-size: 22px; padding: 12px 25px; margin-top: 20px;">He regresado al inicio — Marcar tiempo</button>
       </div>
 
 
       <div class="panel section" id="sec5">
         <div style="margin-bottom: 15px; text-align: right;">
-            <button class="backBtn" onclick="goToSection('sec0')">← Volver a Selección</button>
+          <button class="backBtn" onclick="goToSection('sec0')">← Volver a Selección</button>
         </div>
         <h3>✅ Ritual Completado</h3>
         <div class="prompt">¡La maldición se ha roto! Vuestro valor y astucia han sido suficientes.</div>
         <p class="small">Vuestro tiempo oficial ha sido registrado. Mostrad esta pantalla al Guardián de Meta.</p>
-        
+
         <div id="finalResultDisplay"
           style="text-align: center; padding: 20px; border: 2px solid var(--accent); border-radius: 10px; background: rgba(179, 51, 51, 0.1); margin-top: 20px;">
         </div>
@@ -357,18 +416,30 @@ y tres más son consumidas por la angustia.
 
     // MODIFICADO: Etiqueta de los Guardianes simplificada
     const sectionDetails = {
-        1: { id: 'sec1', label: 'Guardián 1' }, 
-        2: { id: 'sec2', label: 'Guardián 2' },
-        3: { id: 'sec3', label: 'Guardián 3' },
-        4: { id: 'sec4', label: 'Guardián 4' }
+      1: {
+        id: 'sec1',
+        label: 'Guardián 1'
+      },
+      2: {
+        id: 'sec2',
+        label: 'Guardián 2'
+      },
+      3: {
+        id: 'sec3',
+        label: 'Guardián 3'
+      },
+      4: {
+        id: 'sec4',
+        label: 'Guardián 4'
+      }
     };
 
-    // MODIFICADO: Respuesta 4 ahora es un solo número (2, porque 1+3=4 se apagan de 6)
+    // Respuestas correctas
     const correct = {
       1: ['tu sombra', 'sombra', 'tusombra'], // Guardián 1
       2: '13', // Guardián 2
       3: '24', // Guardián 3
-      4: '2' // Guardián 4: 6 velas - 1 apagada - 3 consumidas = 2 quedan encendidas/en pie.
+      4: '2' // Guardián 4: 6 velas - 4 apagadas = 2 quedan encendidas/en pie.
     };
 
     const locationUrls = {
@@ -380,8 +451,25 @@ y tres más son consumidas por la angustia.
 
 
     // ----------------------------------------------------
-    // Funciones de utilidad
+    // Funciones de utilidad para el Modal Personalizado
     // ----------------------------------------------------
+
+    // Función para mostrar el modal
+    function showCustomAlert(message, title = "Aviso del Libro") {
+      const modal = document.getElementById('customAlert');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalMessage = document.getElementById('modalMessage');
+
+      modalTitle.textContent = title;
+      modalMessage.innerHTML = message;
+      modal.classList.add('show');
+    }
+
+    // Función para cerrar el modal
+    function closeCustomAlert() {
+      const modal = document.getElementById('customAlert');
+      modal.classList.remove('show');
+    }
 
     function formatTime(ms) {
       const totalSeconds = Math.floor(ms / 1000);
@@ -404,17 +492,22 @@ y tres más son consumidas por la angustia.
       clearInterval(timerInterval);
     }
 
+    // MODIFICADO: Esta función ahora solo aumenta el contador, la alerta se genera en showHint
     function useHint() {
       hintsUsed++;
-      alert('Pista utilizada. Penalización: +2 minutos en el tiempo final.');
     }
 
-    // Función para mostrar la pista con el texto especial
+    // FUNCIÓN CLAVE MODIFICADA: Ahora muestra la pista en el modal
     function showHint(sectionNum) {
-      if (!completedSections[sectionNum]) { // Solo penaliza si la sección no está completada
-        useHint(); 
+      if (completedSections[sectionNum]) {
+        showCustomAlert('Ya habéis resuelto este guardián. No se necesita pista.', '⛔ Advertencia');
+        return;
       }
-      
+
+      // 1. Aplicar Penalización
+      useHint();
+
+      // 2. Determinar el mensaje de la pista
       let hintText = '';
       switch (sectionNum) {
         case 1:
@@ -427,18 +520,24 @@ y tres más son consumidas por la angustia.
           hintText = "el primer amanecer son 6 almas y el segundo 12";
           break;
         case 4:
-          // MODIFICADO: Pista actualizada
           hintText = "Cuenta solo las que NO se han apagado o consumido.";
           break;
         default:
-          return;
+          hintText = "La pista no está disponible en este momento. Intenta contactar con el Guardián de Meta.";
+          break;
       }
 
-      const hintEl = document.getElementById(`hint${sectionNum}`);
-      if (hintEl) {
-        hintEl.textContent = hintText;
-        hintEl.style.display = 'block';
-      }
+      // 3. Mostrar la pista y la penalización en el modal
+      const modalMessage = `
+        <p style="color: var(--accent); font-weight: bold; font-size: 22px; margin-bottom: 15px;">
+          Penalización: +2 minutos
+        </p>
+        <p style="font-family: 'Blackadder ITC', cursive; font-size: 26px;">
+          "${hintText}"
+        </p>
+      `;
+
+      showCustomAlert(modalMessage, `🗝️ Pista de Guardián ${sectionNum}`);
     }
 
     // Función para ir a cualquier sección y actualizar el selector al volver a sec0
@@ -466,14 +565,37 @@ y tres más son consumidas por la angustia.
     }
 
     // NUEVO: Función para abrir la ubicación de Google Maps
+    // MODIFICADO: Usando showCustomAlert
     function openLocation(guardianNum) {
       const url = locationUrls[guardianNum];
       if (url) {
         window.open(url, '_blank');
       } else {
-        alert('Ubicación no disponible.');
+        showCustomAlert('La ubicación para este Guardián no está disponible o no se ha cargado.', '❌ Error de Ubicación');
       }
     }
+
+    // Función que se llama al resolver una sección
+    // MODIFICADO: Usando showCustomAlert
+    function markSectionCompleted(num) {
+      if (!completedSections[num]) {
+        completedSections[num] = true;
+        showCustomAlert(`¡Guardián ${num} silenciado! Has completado el reto. Volviendo al selector.`, '✅ Reto Superado');
+        goToSection('sec0'); // Volver al selector para actualizar los botones
+      }
+    }
+
+
+    // Oculta todas las secciones al cargar la página
+    window.addEventListener('DOMContentLoaded', () => {
+      const sections = ['sec0', 'sec1', 'sec2', 'sec3', 'sec4', 'sec_final_countdown', 'sec5'];
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
+      // Inicializar el selector para que no esté vacío si no se ha iniciado el juego
+      renderSectionSelector();
+    });
 
     // NUEVA FUNCIÓN: Renderiza los botones del selector dinámicamente
     function renderSectionSelector() {
@@ -491,64 +613,46 @@ y tres más son consumidas por la angustia.
           // Crear botón solo para secciones incompletas
           const button = document.createElement('button');
           // MODIFICADO: Usa la etiqueta simple sin descripción
-          button.textContent = detail.label; 
+          button.textContent = detail.label;
           button.onclick = () => goToSection(detail.id);
           container.appendChild(button);
         } else {
-            // Opcional: Mostrar un mensaje de completado para esa sección
-            const completedMessage = document.createElement('div');
-            completedMessage.innerHTML = `<span style="color:#00AA00; font-weight: bold;">✅ ${detail.label} completado.</span>`;
-            completedMessage.style.padding = '5px 0';
-            completedMessage.style.borderBottom = '1px solid rgba(0,255,0,0.1)';
-            container.appendChild(completedMessage);
+          // Opcional: Mostrar un mensaje de completado para esa sección
+          const completedMessage = document.createElement('div');
+          completedMessage.innerHTML =
+            `<span style="color:#00AA00; font-weight: bold;">✅ ${detail.label} completado.</span>`;
+          completedMessage.style.padding = '5px 0';
+          completedMessage.style.borderBottom = '1px solid rgba(0,255,0,0.1)';
+          container.appendChild(completedMessage);
         }
       }
-      
+
       // Mostrar u ocultar el botón Finalizar Ritual
       if (allCompleted) {
-          container.innerHTML = `<p style="color: var(--accent); font-weight: bold;">¡Los 4 Guardianes han sido silenciados!</p>`;
-          btnFinal.style.display = 'block';
+        container.innerHTML =
+          `<p style="color: var(--accent); font-weight: bold;">¡Los 4 Guardianes han sido silenciados!</p>`;
+        btnFinal.style.display = 'block';
       } else {
-          btnFinal.style.display = 'none';
+        btnFinal.style.display = 'none';
       }
     }
-    
+
     // Función para el botón "Finalizar Ritual" que inicia la cuenta atrás
     function goToFinalCountdown() {
-        goToSection('sec_final_countdown');
-        startFinalCountdown(300); // 300 segundos = 5 minutos
+      goToSection('sec_final_countdown');
+      startFinalCountdown(300); // 300 segundos = 5 minutos
     }
-
-    // Función que se llama al resolver una sección
-    function markSectionCompleted(num) {
-        if (!completedSections[num]) {
-            completedSections[num] = true;
-            alert(`¡Guardián ${num} completado! Volviendo al selector.`);
-            goToSection('sec0'); // Volver al selector para actualizar los botones
-        }
-    }
-
-
-    // Oculta todas las secciones al cargar la página
-    window.addEventListener('DOMContentLoaded', () => {
-      const sections = ['sec0', 'sec1', 'sec2', 'sec3', 'sec4', 'sec_final_countdown', 'sec5'];
-      sections.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.display = 'none';
-      });
-      // Inicializar el selector para que no esté vacío si no se ha iniciado el juego
-      renderSectionSelector(); 
-    });
 
     // ----------------------------------------------------
     // Al pulsar “Comenzar ritual”
     // ----------------------------------------------------
+    // MODIFICADO: Usando showCustomAlert
     function btnStartClick() {
       const teamNameInput = document.getElementById('teamName');
       teamName = (teamNameInput && teamNameInput.value.trim()) || '';
 
       if (!teamName) {
-        alert('⚠️ ¡Debes introducir el nombre del equipo para comenzar el ritual!');
+        showCustomAlert('<strong>¡Debes introducir el nombre del equipo</strong> para comenzar el ritual!', '⚠️ Falta Nombre');
         return;
       }
 
@@ -581,20 +685,29 @@ y tres más son consumidas por la angustia.
     // ----------------------------------------------------
     function check1() {
       if (completedSections[1]) {
-          document.getElementById('msg1').textContent = 'Ya habéis resuelto este guardián.';
-          return;
+        document.getElementById('msg1').textContent = 'Ya habéis resuelto este guardián.';
+        return;
       }
       // Aseguramos que la respuesta se compara sin espacios internos ni mayúsculas
-      const val = document.getElementById('ans1').value.toLowerCase().trim().replace(/\s/g, ''); 
+      const val = document.getElementById('ans1').value.toLowerCase().trim().replace(/\s/g, '');
       const ok = correct[1].includes(val);
       const msg = document.getElementById('msg1');
+      const reward = document.getElementById('reward1'); // Obtener el elemento de recompensa
       if (ok) {
         msg.innerHTML = '<span style="color: var(--accent); font-weight: bold;">¡Guardián silenciado! Pista de la Sombra registrada.</span>';
-        document.getElementById('reward1').innerHTML = `<div style="margin-top: 10px;"><button class="backBtn" onclick="markSectionCompleted(1)">Continuar →</button></div>`;
-        document.getElementById('reward1').classList.remove('hide');
-        document.getElementById('hint1').style.display = 'none';
+        reward.innerHTML = `<div style="margin-top: 10px;"><button class="backBtn" onclick="markSectionCompleted(1)">Continuar →</button></div>`;
+        reward.classList.remove('hide');
+        // NUEVO: Scroll hacia el resultado
+        reward.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
       } else {
         msg.textContent = 'La respuesta se desvanece en la oscuridad. Intenta de nuevo.';
+        msg.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        }); // Scroll a mensaje de error
       }
     }
 
@@ -603,18 +716,27 @@ y tres más son consumidas por la angustia.
     // ----------------------------------------------------
     function check2() {
       if (completedSections[2]) {
-          document.getElementById('msg2').textContent = 'Ya habéis resuelto este guardián.';
-          return;
+        document.getElementById('msg2').textContent = 'Ya habéis resuelto este guardián.';
+        return;
       }
       const val = document.getElementById('ans2').value.trim();
       const msg = document.getElementById('msg2');
+      const reward = document.getElementById('reward2'); // Obtener el elemento de recompensa
       if (val === correct[2]) {
         msg.innerHTML = '<span style="color: var(--accent); font-weight: bold;">¡Guardián silenciado! Pista del Cráneo registrada.</span>';
-        document.getElementById('reward2').innerHTML = `<div style="margin-top: 10px;"><button class="backBtn" onclick="markSectionCompleted(2)">Continuar →</button></div>`;
-        document.getElementById('reward2').classList.remove('hide');
-        document.getElementById('hint2').style.display = 'none';
+        reward.innerHTML = `<div style="margin-top: 10px;"><button class="backBtn" onclick="markSectionCompleted(2)">Continuar →</button></div>`;
+        reward.classList.remove('hide');
+        // NUEVO: Scroll hacia el resultado
+        reward.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
       } else {
         msg.textContent = 'El eco no os da la respuesta. Volved a mirar.';
+        msg.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        }); // Scroll a mensaje de error
       }
     }
 
@@ -623,18 +745,27 @@ y tres más son consumidas por la angustia.
     // ----------------------------------------------------
     function check3() {
       if (completedSections[3]) {
-          document.getElementById('msg3').textContent = 'Ya habéis resuelto este guardián.';
-          return;
+        document.getElementById('msg3').textContent = 'Ya habéis resuelto este guardián.';
+        return;
       }
       const val = document.getElementById('ans3').value.trim();
       const msg = document.getElementById('msg3');
+      const reward = document.getElementById('reward3'); // Obtener el elemento de recompensa
       if (val === correct[3]) {
         msg.innerHTML = '<span style="color: var(--accent); font-weight: bold;">¡Guardián silenciado! Pista del Muerto registrada.</span>';
-        document.getElementById('reward3').innerHTML = `<div style="margin-top: 10px;"><button class="backBtn" onclick="markSectionCompleted(3)">Continuar →</button></div>`;
-        document.getElementById('reward3').classList.remove('hide');
-        document.getElementById('hint3').style.display = 'none';
+        reward.innerHTML = `<div style="margin-top: 10px;"><button class="backBtn" onclick="markSectionCompleted(3)">Continuar →</button></div>`;
+        reward.classList.remove('hide');
+        // NUEVO: Scroll hacia el resultado
+        reward.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
       } else {
         msg.textContent = 'El muerto no se conforma. Recalculad los huesos.';
+        msg.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        }); // Scroll a mensaje de error
       }
     }
 
@@ -643,26 +774,36 @@ y tres más son consumidas por la angustia.
     // ----------------------------------------------------
     function check4() {
       if (completedSections[4]) {
-          document.getElementById('msg4').textContent = 'Ya habéis resuelto este guardián.';
-          return;
+        document.getElementById('msg4').textContent = 'Ya habéis resuelto este guardián.';
+        return;
       }
       // Se compara la respuesta con el nuevo valor '2'
       const val = document.getElementById('ans4').value.toLowerCase().trim().replace(/\s/g, '');
       const msg = document.getElementById('msg4');
+      const reward = document.getElementById('reward4'); // Obtener el elemento de recompensa
       const ok = val === correct[4];
 
       if (ok) {
         msg.innerHTML = '<span style="color: var(--accent); font-weight: bold;">¡Guardián silenciado! El Libro de los Susurros está completo.</span>';
-        document.getElementById('reward4').innerHTML = `<div style="margin-top: 10px;"><button class="backBtn" onclick="markSectionCompleted(4)">Continuar →</button></div>`;
-        document.getElementById('reward4').classList.remove('hide');
-        document.getElementById('hint4').style.display = 'none';
-        
+        reward.innerHTML = `<div style="margin-top: 10px;"><button class="backBtn" onclick="markSectionCompleted(4)">Continuar →</button></div>`;
+        reward.classList.remove('hide');
+
         // Ocultar los campos de respuesta y botones de la sección 4
         document.getElementById('ans4').style.display = 'none';
-        document.querySelector('#sec4 > div[style*="margin-top:8px"]').style.display = 'none'; 
+        document.querySelector('#sec4 > div[style*="margin-top:8px"]').style.display = 'none';
+
+        // NUEVO: Scroll hacia el resultado
+        reward.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
 
       } else {
         msg.textContent = 'La Dama sigue encadenada, su número es incorrecto. Vuelve a contar las llamas.';
+        msg.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        }); // Scroll a mensaje de error
       }
     }
 
@@ -718,8 +859,8 @@ y tres más son consumidas por la angustia.
               
               <!-- Contenedor vertical apilado -->
               <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 30px;">
-                  <!-- IMAGEN DE ARBOLEAS: Eliminado border-radius: 50%; y border: 3px solid var(--accent); para que no sea circular -->
-                  <img src="arboleas.png" onerror="this.onerror=null; this.src='https://placehold.co/120x120/121213/b33?text=ARBOLEAS'" alt="Escudo de Arboleas" style="height: 120px; width: auto;">
+                  <!-- IMAGEN DE ARBOLEAS: Rectangular -->
+                  <img src="arboleas.png" onerror="this.onerror=null; this.src='https://placehold.co/200x120/121213/b33?text=ARBOLEAS'" alt="Escudo de Arboleas" style="height: 120px; width: auto; border-radius: 4px;">
                   <img src="sincabeza.png" onerror="this.onerror=null; this.src='https://placehold.co/60x60/121213/9a9a9a?text=LOGO'" alt="Logo de la Empresa" style="height: 60px; width: auto;">
               </div>
               <p style="font-size: 20px; color: var(--muted); margin-top: 20px;">Penalización por pistas: ${hintsUsed * 2} min</p>
