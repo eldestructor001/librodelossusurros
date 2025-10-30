@@ -694,6 +694,7 @@ Si cada noche los muertos se duplican,
         if(--t<0){
           clearInterval(countdownInterval);
           disp.textContent="¡Tiempo agotado!";
+          autoScroll();
         }
       },1000);
     }
