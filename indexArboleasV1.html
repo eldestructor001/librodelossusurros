@@ -150,6 +150,7 @@
 </head>
 
 <body>
+  <!-- Custom Modal HTML Structure -->
   <div id="customAlert" class="modal-overlay">
     <div class="modal-content">
       <div id="modalTitle" class="modal-title"></div>
@@ -161,6 +162,7 @@
   <div class="app" role="application">
     <header style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
       <div style="flex-grow: 1;">
+        <!-- MODIFICADO: Nombre del evento -->
         <h1>La Noche de los Susurros en Arboleas</h1>
         <p class="lead">Sigue las pistas, completa los retos y rompe la maldición antes de medianoche.</p>
       </div>
@@ -195,18 +197,21 @@
           <div class="blackadder-white-left"
             style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: left; line-height: 1.2;">
             <p style="margin: 0 0 15px 0; font-size: 28px;">Esta noche, las almas de Arboleas buscan su voz.</p>
-            <p style="margin: 0; font-size: 28px;">Cinco guardianes os esperan.</p>
+            <p style="margin: 0; font-size: 28px;">Cuatro guardianes os esperan.</p>
             <p style="margin: 0 0 15px 0; font-size: 28px;">Completad el Libro de los Susurros antes de la media noche...
             </p>
             <p style="margin: 0; font-size: 28px;">O su eco os arrastrará al olvido.</p>
           </div>
         </div>
 
+        <!-- MODIFICADO: Panel de navegación que se renderiza con JS -->
         <div id="sectionSelector"
           style="margin-top:25px; text-align: center; display: none; padding: 15px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px;">
           <h4>Selecciona el Guardián a visitar:</h4>
           <div id="guardianButtonsContainer" style="display: flex; flex-direction: column; gap: 10px;">
-            </div>
+            <!-- Botones se añaden aquí con JS -->
+          </div>
+          <!-- NUEVO: Botón de finalización que solo aparece cuando todas las secciones están completas -->
           <button id="btnStartFinal" onclick="goToFinalCountdown()" style="display: none; margin-top: 25px;">Finalizar
             Ritual</button>
         </div>
@@ -217,10 +222,12 @@
         <div style="margin-bottom: 15px; text-align: right;">
           <button class="backBtn" onclick="goToSection('sec0')">← Volver a Selección</button>
         </div>
+        <!-- Botón de Ubicación -->
         <button class="location-button" onclick="openLocation(1)">Ver Ubicación de Guardián 1</button>
 
         <h3>🔮 Guardián 1</h3>
         <div class="prompt">
+          <!-- MODIFICADO: Acertijo del Guardián 1 (Tu sombra) -->
           <pre style="white-space: pre-wrap; background:rgba(0,0,0,0.3);padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.02)">No tengo ojos, pero siempre te miro.
 
 No tengo voz, pero oyes mi suspiro.
@@ -238,6 +245,7 @@ y si te giras… ya no hay nada.
           <button class="hintBtn" onclick="showHint(1)">Pista (+2 min)</button>
         </div>
         <div id="msg1" class="small" style="margin-top:8px;color:#f2f2f2"></div>
+        <!-- ELIMINADO: Se quita el div de pista inline, ahora sale en el modal -->
         <div id="reward1" class="result hide"></div>
       </div>
 
@@ -245,8 +253,10 @@ y si te giras… ya no hay nada.
         <div style="margin-bottom: 15px; text-align: right;">
           <button class="backBtn" onclick="goToSection('sec0')">← Volver a Selección</button>
         </div>
+        <!-- Botón de Ubicación -->
         <button class="location-button" onclick="openLocation(2)">Ver Ubicación de Guardián 2</button>
 
+        <!-- MODIFICADO: Nombre del guardián -->
         <h3>🔪 Guardián 2</h3>
         <div class="prompt">
           <p class="blackadder-gray-left"
@@ -267,16 +277,20 @@ y si te giras… ya no hay nada.
         </div>
         <div id="msg2" class="small" style="margin-top:8px;color:#f2f2f2"></div>
         <div id="reward2" class="result hide"></div>
-        </div>
+        <!-- ELIMINADO: Se quita el div de pista inline, ahora sale en el modal -->
+      </div>
 
       <div class="panel section" id="sec3">
         <div style="margin-bottom: 15px; text-align: right;">
           <button class="backBtn" onclick="goToSection('sec0')">← Volver a Selección</button>
         </div>
+        <!-- Botón de Ubicación -->
         <button class="location-button" onclick="openLocation(3)">Ver Ubicación de Guardián 3</button>
 
+        <!-- MODIFICADO: Nombre del guardián -->
         <h3>🧟 Guardián 3</h3>
         <div class="prompt">
+          <!-- MODIFICADO: 'El muerto' cambiado a 'Un muerto' -->
           <p class="blackadder-white-left"
             style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: left; margin: 5px 0; font-size: 20px;">
             Un muerto te mira con ojos huecos.</p>
@@ -306,16 +320,20 @@ Si cada noche los muertos se levantan y duplican su número,
         </div>
         <div id="msg3" class="small" style="margin-top:8px;color:#f2f2f2"></div>
         <div id="reward3" class="result hide"></div>
-        </div>
+        <!-- ELIMINADO: Se quita el div de pista inline, ahora sale en el modal -->
+      </div>
 
       <div class="panel section" id="sec4">
         <div style="margin-bottom: 15px; text-align: right;">
           <button class="backBtn" onclick="goToSection('sec0')">← Volver a Selección</button>
         </div>
+        <!-- Botón de Ubicación -->
         <button class="location-button" onclick="openLocation(4)">Ver Ubicación de Guardián 4</button>
 
+        <!-- MODIFICADO: Nombre del guardián -->
         <h3>⛓️ Guardián 4</h3>
         <div class="prompt">
+          <!-- MODIFICADO: Nuevo texto y acertijo más simple y terrorífico -->
           <p class="blackadder-white-left"
             style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: left; margin: 5px 0; font-size: 20px;">
             La Dama Encadenada os susurra desde su prisión de sombras. Solo un número abrirá las puertas de su celda:</p>
@@ -336,37 +354,11 @@ y tres más son consumidas por la angustia.
         </div>
 
         <div id="msg4" class="small" style="margin-top:8px;color:#f2f2f2"></div>
+        <!-- ELIMINADO: Se quita el div de pista inline, ahora sale en el modal -->
         <div id="reward4" class="result hide"></div>
       </div>
 
-      <div class="panel section" id="sec5">
-          <div style="margin-bottom: 15px; text-align: right;">
-              <button class="backBtn" onclick="goToSection('sec0')">← Volver a Selección</button>
-          </div>
-          <button class="location-button" onclick="openLocation(5)">Ver Ubicación de Guardián 5</button>
-
-          <h3>💀 Guardián 5 — Código Final</h3>
-          <div class="prompt">
-              <p class="blackadder-white-left"
-                style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: left; margin: 5px 0; font-size: 24px;">
-                Los susurros se han detenido. Para romper la maldición, debéis encontrar los *cuatro números* dispersos por la zona de este guardián y colocarlos en el *orden correcto*.
-              </p>
-              <p class="blackadder-white-left"
-                style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: left; margin: 5px 0; font-size: 24px;">
-                La respuesta es una secuencia de cuatro dígitos.</p>
-          </div>
-
-          <label>Introduce el código de cuatro dígitos</label>
-          <input id="ans5" type="text" autocomplete="off" />
-
-          <div style="margin-top:8px">
-              <button onclick="check5()">Enviar respuesta</button>
-              <button class="hintBtn" onclick="showHint(5)">Pista (+2 min)</button>
-          </div>
-
-          <div id="msg5" class="small" style="margin-top:8px;color:#f2f2f2"></div>
-          <div id="reward5" class="result hide"></div>
-      </div>
+      <!-- NUEVA SECCIÓN: Solo para la cuenta atrás final -->
       <div class="panel section" id="sec_final_countdown">
         <div style="margin-bottom: 15px; text-align: right;">
           <button class="backBtn" onclick="goToSection('sec0')">← Volver a Selección</button>
@@ -385,7 +377,7 @@ y tres más son consumidas por la angustia.
       </div>
 
 
-      <div class="panel section" id="sec_final_result">
+      <div class="panel section" id="sec5">
         <div style="margin-bottom: 15px; text-align: right;">
           <button class="backBtn" onclick="goToSection('sec0')">← Volver a Selección</button>
         </div>
@@ -414,17 +406,15 @@ y tres más son consumidas por la angustia.
     let teamName = '';
 
     // NUEVO: Array para rastrear qué secciones están completadas
-    // AÑADIDO: Guardián 5
+    // Se utiliza para mostrar/ocultar los botones del selector y habilitar el botón final
     const completedSections = {
       1: false,
       2: false,
       3: false,
-      4: false,
-      5: false // <-- AÑADIDO
+      4: false
     };
 
     // MODIFICADO: Etiqueta de los Guardianes simplificada
-    // AÑADIDO: Guardián 5
     const sectionDetails = {
       1: {
         id: 'sec1',
@@ -441,30 +431,22 @@ y tres más son consumidas por la angustia.
       4: {
         id: 'sec4',
         label: 'Guardián 4'
-      },
-      5: { // <-- AÑADIDO
-        id: 'sec5',
-        label: 'Guardián 5'
       }
     };
 
     // Respuestas correctas
-    // AÑADIDO: Guardián 5 (1639)
     const correct = {
-      1: ['tu sombra', 'sombra', 'tusombra'],
-      2: '13',
-      3: '24',
-      4: '2',
-      5: '1639' // <-- CÓDIGO FINAL
+      1: ['tu sombra', 'sombra', 'tusombra'], // Guardián 1
+      2: '13', // Guardián 2
+      3: '24', // Guardián 3
+      4: '2' // Guardián 4: 6 velas - 4 apagadas = 2 quedan encendidas/en pie.
     };
 
-    // AÑADIDO: URL para Guardián 5
     const locationUrls = {
       1: 'https://maps.app.goo.gl/2EafbzYGXRCtRmyS7',
       2: 'https://maps.app.goo.gl/bMndTrHzv4xrkr6TA',
       3: 'https://maps.app.goo.gl/iTJCapCmPxauYwGY6',
-      4: 'https://maps.app.goo.gl/HoyvxAuguCb3fxY57',
-      5: 'https://maps.app.goo.gl/wCY9kbfUdq1RBccR9' // <-- NUEVA UBICACIÓN
+      4: 'https://maps.app.goo.gl/HoyvxAuguCb3fxY57'
     };
 
 
@@ -516,7 +498,6 @@ y tres más son consumidas por la angustia.
     }
 
     // FUNCIÓN CLAVE MODIFICADA: Ahora muestra la pista en el modal
-    // ACTUALIZADO: Se añadió el case 5
     function showHint(sectionNum) {
       if (completedSections[sectionNum]) {
         showCustomAlert('Ya habéis resuelto este guardián. No se necesita pista.', '⛔ Advertencia');
@@ -541,9 +522,6 @@ y tres más son consumidas por la angustia.
         case 4:
           hintText = "Cuenta solo las que NO se han apagado o consumido.";
           break;
-        case 5: // <-- NUEVA PISTA 5
-          hintText = "El código es 1639. Pero... ¿en qué orden están?";
-          break;
         default:
           hintText = "La pista no está disponible en este momento. Intenta contactar con el Guardián de Meta.";
           break;
@@ -563,10 +541,9 @@ y tres más son consumidas por la angustia.
     }
 
     // Función para ir a cualquier sección y actualizar el selector al volver a sec0
-    // ACTUALIZADO: Lista de secciones para incluir sec5, sec_final_countdown, y sec_final_result
     function goToSection(sectionId) {
       // Primero, oculta todas las secciones
-      const sections = ['sec0', 'sec1', 'sec2', 'sec3', 'sec4', 'sec5', 'sec_final_countdown', 'sec_final_result'];
+      const sections = ['sec0', 'sec1', 'sec2', 'sec3', 'sec4', 'sec_final_countdown', 'sec5'];
       sections.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.style.display = 'none';
@@ -611,8 +588,7 @@ y tres más son consumidas por la angustia.
 
     // Oculta todas las secciones al cargar la página
     window.addEventListener('DOMContentLoaded', () => {
-      // ACTUALIZADO: Lista de secciones para ocultar al inicio
-      const sections = ['sec0', 'sec1', 'sec2', 'sec3', 'sec4', 'sec5', 'sec_final_countdown', 'sec_final_result'];
+      const sections = ['sec0', 'sec1', 'sec2', 'sec3', 'sec4', 'sec_final_countdown', 'sec5'];
       sections.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.style.display = 'none';
@@ -622,28 +598,25 @@ y tres más son consumidas por la angustia.
     });
 
     // NUEVA FUNCIÓN: Renderiza los botones del selector dinámicamente
-    // ACTUALIZADO: Requiere 5 Guardianes para el botón Final
     function renderSectionSelector() {
       const container = document.getElementById('guardianButtonsContainer');
       const btnFinal = document.getElementById('btnStartFinal');
       container.innerHTML = '';
       let allCompleted = true;
-      let completedCount = 0; // Contador de Guardianes completados
 
       for (const num in sectionDetails) {
         const detail = sectionDetails[num];
-        // Asegurar que el num es un string clave válido en completedSections
         const isCompleted = completedSections[num];
 
         if (!isCompleted) {
           allCompleted = false; // Si falta alguna, el ritual no está listo
           // Crear botón solo para secciones incompletas
           const button = document.createElement('button');
+          // MODIFICADO: Usa la etiqueta simple sin descripción
           button.textContent = detail.label;
           button.onclick = () => goToSection(detail.id);
           container.appendChild(button);
         } else {
-          completedCount++; // Incrementar contador
           // Opcional: Mostrar un mensaje de completado para esa sección
           const completedMessage = document.createElement('div');
           completedMessage.innerHTML =
@@ -654,10 +627,10 @@ y tres más son consumidas por la angustia.
         }
       }
 
-      // Mostrar u ocultar el botón Finalizar Ritual (ahora requiere 5)
-      if (completedCount === 5) {
+      // Mostrar u ocultar el botón Finalizar Ritual
+      if (allCompleted) {
         container.innerHTML =
-          `<p style="color: var(--accent); font-weight: bold;">¡Los 5 Guardianes han sido silenciados!</p>`;
+          `<p style="color: var(--accent); font-weight: bold;">¡Los 4 Guardianes han sido silenciados!</p>`;
         btnFinal.style.display = 'block';
       } else {
         btnFinal.style.display = 'none';
@@ -811,7 +784,7 @@ y tres más son consumidas por la angustia.
       const ok = val === correct[4];
 
       if (ok) {
-        msg.innerHTML = '<span style="color: var(--accent); font-weight: bold;">¡Guardián silenciado! El Libro de los Susurros está a punto de completarse.</span>';
+        msg.innerHTML = '<span style="color: var(--accent); font-weight: bold;">¡Guardián silenciado! El Libro de los Susurros está completo.</span>';
         reward.innerHTML = `<div style="margin-top: 10px;"><button class="backBtn" onclick="markSectionCompleted(4)">Continuar →</button></div>`;
         reward.classList.remove('hide');
 
@@ -833,45 +806,6 @@ y tres más son consumidas por la angustia.
         }); // Scroll a mensaje de error
       }
     }
-    
-    // ----------------------------------------------------
-    // Check 5 (Guardián 5 - Código 1639) // <-- NUEVO CHECK 5
-    // ----------------------------------------------------
-    function check5() {
-      if (completedSections[5]) {
-        document.getElementById('msg5').textContent = 'Ya habéis resuelto este guardián.';
-        return;
-      }
-      // La respuesta es '1639', permite números solamente.
-      const val = document.getElementById('ans5').value.trim();
-      const msg = document.getElementById('msg5');
-      const reward = document.getElementById('reward5');
-      const ok = val === correct[5];
-
-      if (ok) {
-        msg.innerHTML = '<span style="color: var(--accent); font-weight: bold;">¡Guardián silenciado! Habéis completado el Libro de los Susurros.</span>';
-        reward.innerHTML = `<div style="margin-top: 10px;"><button class="backBtn" onclick="markSectionCompleted(5)">Continuar →</button></div>`;
-        reward.classList.remove('hide');
-
-        // Ocultar los campos de respuesta y botones
-        document.getElementById('ans5').style.display = 'none';
-        document.querySelector('#sec5 > div[style*="margin-top:8px"]').style.display = 'none';
-
-        // Scroll hacia el resultado
-        reward.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-
-      } else {
-        msg.textContent = 'El código es incorrecto. Los susurros os confunden. Revisad el orden de los números.';
-        msg.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        }); // Scroll a mensaje de error
-      }
-    }
-
 
     // ----------------------------------------------------
     // Timer Final (5 minutos)
@@ -912,9 +846,9 @@ y tres más son consumidas por la angustia.
       // Ocultar el timer fijo de la esquina
       document.getElementById('timer-container').style.display = 'none';
 
-      // Ocultar la sección actual (sec_final_countdown) y mostrar solo sec_final_result
+      // Ocultar la sección actual (sec_final_countdown) y mostrar solo sec5
       document.getElementById('sec_final_countdown').style.display = 'none';
-      goToSection('sec_final_result'); // Muestra la sección final (ID renombrado)
+      goToSection('sec5'); // Muestra la sección final
 
       // Generar el contenido final (Solo nombre, tiempo e imágenes)
       const finalResultDisplay = document.getElementById('finalResultDisplay');
@@ -923,7 +857,9 @@ y tres más son consumidas por la angustia.
               <h4 style="font-size: 36px; margin: 0 0 10px 0;">${teamName}</h4>
               <h1 style="font-size: 80px; color: var(--accent); margin: 0 0 20px 0;">${finalTime}</h1>
               
+              <!-- Contenedor vertical apilado -->
               <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 30px;">
+                  <!-- IMAGEN DE ARBOLEAS: Rectangular -->
                   <img src="arboleas.png" onerror="this.onerror=null; this.src='https://placehold.co/200x120/121213/b33?text=ARBOLEAS'" alt="Escudo de Arboleas" style="height: 120px; width: auto; border-radius: 4px;">
                   <img src="sincabeza.png" onerror="this.onerror=null; this.src='https://placehold.co/60x60/121213/9a9a9a?text=LOGO'" alt="Logo de la Empresa" style="height: 60px; width: auto;">
               </div>
@@ -931,6 +867,10 @@ y tres más son consumidas por la angustia.
           </div>
       `;
       finalResultDisplay.style.display = 'block';
+
+      // Ocultar el botón original de finishRun
+      const finishButton = document.querySelector('#sec5 button');
+      if (finishButton) finishButton.style.display = 'none';
 
       window.scrollTo({
         top: 0,
