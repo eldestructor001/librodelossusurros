@@ -451,6 +451,16 @@ Si cada noche los muertos se duplican,
       modal.classList.remove('show');
     }
 
+    // ----------------------------------------------------
+    // ❗ FUNCIÓN PARA EL SCROLL DOWN ❗
+    // ----------------------------------------------------
+    function autoScroll() {
+      window.scrollTo({
+        top: document.body.scrollHeight, // Desplaza hasta el final de la página
+        behavior: 'smooth' // Hace que la transición sea suave
+      });
+    }
+
     // --- Funciones del temporizador ---
     function formatTime(ms){
         const totalSeconds = Math.floor(ms / 1000);
@@ -610,6 +620,7 @@ Si cada noche los muertos se duplican,
         msg.textContent='';
         reward.innerHTML = '<p style="color:white; margin-bottom:15px; font-weight:bold;">✅ La pitonisa asiente. Pista desbloqueada.</p><div style="text-align:right;"><button style="background-color: white; color: var(--accent); border: 2px solid white; border-radius: 6px; padding: 10px 20px; font-weight: bold; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.backgroundColor=\'#eee\'" onmouseout="this.style.backgroundColor=\'white\'" onclick="markSectionCompleted(1)">Continuar →</button></div>';
         reward.classList.remove('hide');
+        autoScroll(); // ⬅️ SCROLL AÑADIDO
       }else{
         msg.textContent='La luz vacila: prueba otra vez.';
         reward.classList.add('hide');
@@ -626,6 +637,7 @@ Si cada noche los muertos se duplican,
         msg.textContent='';
         reward.innerHTML = '<p style="color:white; margin-bottom:15px; font-weight:bold;">✅ ¡Respuesta correcta! El hombre de la motosierra se aparta.</p><div style="text-align:right;"><button style="background-color: white; color: var(--accent); border: 2px solid white; border-radius: 6px; padding: 10px 20px; font-weight: bold; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.backgroundColor=\'#eee\'" onmouseout="this.style.backgroundColor=\'white\'" onclick="markSectionCompleted(2)">Continuar →</button></div>';
         reward.classList.remove('hide');
+        autoScroll(); // ⬅️ SCROLL AÑADIDO
       }else{
         msg.textContent='El eco no os da la respuesta.';
         reward.classList.add('hide');
@@ -642,6 +654,7 @@ Si cada noche los muertos se duplican,
         msg.textContent='';
         reward.innerHTML = '<p style="color:white; margin-bottom:15px; font-weight:bold;">✅ ¡Respuesta correcta! El muerto os entrega su secreto.</p><div style="text-align:right;"><button style="background-color: white; color: var(--accent); border: 2px solid white; border-radius: 6px; padding: 10px 20px; font-weight: bold; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.backgroundColor=\'#eee\'" onmouseout="this.style.backgroundColor=\'white\'" onclick="markSectionCompleted(3)">Continuar →</button></div>';
         reward.classList.remove('hide');
+        autoScroll(); // ⬅️ SCROLL AÑADIDO
       }else{
         msg.textContent='El muerto no se conforma.';
         reward.classList.add('hide');
@@ -661,6 +674,7 @@ Si cada noche los muertos se duplican,
         // ❗ Botón movido a reward ❗
         reward.innerHTML='<p style="color:white; margin-bottom:15px; font-weight:bold;">✅ ¡La moneda! La monja os entrega el pergamino.</p><div style="text-align:right;"><button style="background-color: white; color: var(--accent); border: 2px solid white; border-radius: 6px; padding: 10px 20px; font-weight: bold; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.backgroundColor=\'#eee\'" onmouseout="this.style.backgroundColor=\'white\'" onclick="markSectionCompleted(4)">Continuar →</button></div>';
         reward.classList.remove('hide');
+        autoScroll(); // ⬅️ SCROLL AÑADIDO
       } else {
         msg.textContent='Aún no la encontráis. Seguid buscando.';
         reward.classList.add('hide');
@@ -697,6 +711,7 @@ Si cada noche los muertos se duplican,
       const finalResultDisplay = document.getElementById('finalResultDisplay');
       finalResultDisplay.style.display='block';
       
+      
       // Output final
       finalResultDisplay.innerHTML=`
         <div style="background: #1e1e20; padding: 25px; border-radius: 12px; border: 2px solid var(--accent); margin-top: 20px; text-align: center; color: #fff;">
@@ -714,6 +729,8 @@ Si cada noche los muertos se duplican,
       // Ocultar botón "He regresado" de la sección 5
       const finishButton = document.querySelector('#sec5 > button');
       if (finishButton) finishButton.style.display = 'none';
+
+      autoScroll(); // ⬅️ SCROLL AÑADIDO
     }
   </script>
 </body>
