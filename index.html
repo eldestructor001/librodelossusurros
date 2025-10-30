@@ -4,27 +4,49 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>La Noche de los Susurros en Arboleas — Libro Digital</title>
-  <link rel="stylesheet" href="style.css">
+  <title>La Noche de los Susurros en Huércal — Libro Digital</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
-    /* Estilo adicional para el cronómetro fijo */
-    #timer-container {
-      margin-top: 15px;
-      /* Ajuste para la nueva posición */
-    }
-
     /* Adaptación para la sección final del tiempo en grande */
     #finalResultDisplay {
       font-family: 'Blackadder ITC', cursive;
     }
 
-    /* Clases para aplicar estilos de fuente y tamaño en sec0 si no se cargan correctamente in-line */
+    /* Estilo para el texto principal del Hub (sec0) */
     .blackadder-white-left {
       font-family: 'Blackadder ITC', cursive;
       color: #fff;
       text-align: left;
       line-height: 1.2;
       font-size: 28px;
+    }
+
+    /* ❗ NUEVOS ESTILOS PARA LOS PROMPTS DE TEXTO ❗ */
+    /* Estilo para el texto blanco alineado a la izquierda (Por defecto) */
+    .white-left-text {
+        color: #fff;
+        font-size: 24px; /* ❗ TAMAÑO AUMENTADO A 24PX ❗ */
+        margin-top: 10px;
+        line-height: 1.5;
+        text-align: left;
+    }
+
+    /* Estilo para el texto gris alineado a la derecha */
+    .grey-right-text {
+      color: var(--muted);
+      font-size: 24px; /* ❗ TAMAÑO AUMENTADO A 24PX ❗ */
+      margin-top: 10px;
+      line-height: 1.5;
+      text-align: right; 
+    }
+    
+    /* Estilo para el texto gris alineado a la izquierda */
+    .grey-left-text {
+        color: var(--muted);
+        font-size: 24px; /* ❗ TAMAÑO AUMENTADO A 24PX ❗ */
+        margin-top: 10px;
+        line-height: 1.5;
+        text-align: left;
     }
 
     /* Nuevo estilo para el botón de regreso */
@@ -41,25 +63,29 @@
       border-color: #fff;
       color: #fff;
     }
-
-    /* Estilo para el nuevo botón de Ubicación */
-    .location-button {
-      background-color: #007bff;
-      /* Un color de mapa más estándar, o ajustado al tema */
-      background-image: linear-gradient(45deg, #1c73a4, #007bff);
-      border: none;
-      color: white;
-      padding: 10px 20px;
-      font-size: 20px;
-      margin-top: 15px;
-      border-radius: 8px;
-      box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+    
+    /* ❗ NUEVO ESTILO PARA EL BOTÓN DE UBICACIÓN MÁS GRANDE (misma tipografía) ❗ */
+    .locationBtn {
+        display: inline-block;
+        padding: 12px 25px; 
+        font-size: 18px; 
+        font-weight: bold;
+        color: #fff; 
+        background-color: var(--accent);
+        background-image: linear-gradient(45deg, #cc4444, #aa3333); 
+        border: none;
+        border-radius: 6px;
+        text-decoration: none; 
+        transition: all 0.2s;
+        box-shadow: 0 4px 10px rgba(170, 51, 51, 0.4);
     }
 
-    .location-button:hover {
-      box-shadow: 0 4px 20px rgba(0, 123, 255, 0.6);
-      background-image: linear-gradient(45deg, #007bff, #1c73a4);
+    .locationBtn:hover {
+        background-color: #aa3333;
+        background-image: linear-gradient(45deg, #aa3333, #882222);
+        box-shadow: 0 6px 15px rgba(170, 51, 51, 0.6);
     }
+
 
     /* Estilo para el botón de Finalizar Ritual que aparece al final */
     #btnStartFinal {
@@ -98,7 +124,6 @@
 
     .modal-content {
       background: #18181a;
-      /* Más oscuro que el panel */
       border: 2px solid var(--accent);
       border-radius: 12px;
       padding: 30px;
@@ -150,7 +175,6 @@
 </head>
 
 <body>
-  <!-- Custom Modal HTML Structure -->
   <div id="customAlert" class="modal-overlay">
     <div class="modal-content">
       <div id="modalTitle" class="modal-title"></div>
@@ -159,93 +183,96 @@
     </div>
   </div>
 
+
   <div class="app" role="application">
-    <header style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
-      <div style="flex-grow: 1;">
-        <!-- MODIFICADO: Nombre del evento -->
-        <h1>La Noche de los Susurros en Arboleas</h1>
+    <header style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;">
+      <div style="flex-grow:1;">
+        <h1>La Noche de los Susurros en Huércal</h1>
         <p class="lead">Sigue las pistas, completa los retos y rompe la maldición antes de medianoche.</p>
       </div>
       <div id="timer-container">
-        <span id="team-display" style="font-size: 20px; color: #fff; margin-bottom: 5px; display: block;"></span>
-        <span id="timer-label">Tiempo:</span>
-        <span id="timer">00:00:00</span>
+        <span id="team-display" style="font-size:20px;color:#fff;display:block;"></span>
+        <span id="timer-label">Tiempo:</span> <span id="timer">00:00</span>
       </div>
     </header>
 
     <div class="panel" id="startPanel">
-      <div style="display:flex;justify-content:space-between;align-items:center">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
         <div>
           <div class="small">Equipo</div>
           <input id="teamName" type="text" placeholder="Nombre del equipo (p.ej. Los Valientes)" />
-        </div>
-        <div style="text-align:right">
         </div>
       </div>
       <div class="controls">
         <button id="btnStart">Comenzar el ritual</button>
       </div>
-      <div class="status" id="status">Pulsa <strong>Comenzar el ritual</strong> para iniciar el cronómetro y desbloquear
-        la primera prueba.</div>
+      <div class="status" id="status">Pulsa <strong>Comenzar el ritual</strong> para iniciar el cronómetro y desbloquear la primera prueba.</div>
     </div>
 
     <div id="flow" class="hide">
 
       <div class="panel section" id="sec0">
         <h3>📜 La Voz de la Noche</h3>
+        <audio controls class="dark-audio-player" src="assets/audio/S0.mp3"></audio>
         <div class="prompt">
           <div class="blackadder-white-left"
-            style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: left; line-height: 1.2;">
-            <p style="margin: 0 0 15px 0; font-size: 28px;">Esta noche, las almas de Arboleas buscan su voz.</p>
+            style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: left; line-height: 1.2; margin-bottom: 20px;">
+            <p style="margin: 0 0 15px 0; font-size: 28px;">Esta noche, las almas de Huércal buscan su voz.</p>
             <p style="margin: 0; font-size: 28px;">Cuatro guardianes os esperan.</p>
-            <p style="margin: 0 0 15px 0; font-size: 28px;">Completad el Libro de los Susurros antes de la media noche...
-            </p>
+            <p style="margin: 0 0 15px 0; font-size: 28px;">Completad el Libro de los Susurros antes de la media noche...</p>
             <p style="margin: 0; font-size: 28px;">O su eco os arrastrará al olvido.</p>
+          </div>
+          <div class="grey-right-text" style="margin-top: 15px; font-style: italic;">
+              <p style="margin: 0;">El eco del pasado aún susurra entre muros dormidos.</p>
+              <p style="margin: 0;">Donde el viento se enreda con la tierra morena,</p>
+              <p style="margin: 0;">una voz antigua aguarda entre sombras y polvo.</p>
+              <p style="margin: 0;">Allí hallarás a quien ve lo que otros temen mirar</p>
           </div>
         </div>
 
-        <!-- MODIFICADO: Panel de navegación que se renderiza con JS -->
         <div id="sectionSelector"
           style="margin-top:25px; text-align: center; display: none; padding: 15px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px;">
           <h4>Selecciona el Guardián a visitar:</h4>
           <div id="guardianButtonsContainer" style="display: flex; flex-direction: column; gap: 10px;">
-            <!-- Botones se añaden aquí con JS -->
-          </div>
-          <!-- NUEVO: Botón de finalización que solo aparece cuando todas las secciones están completas -->
-          <button id="btnStartFinal" onclick="goToFinalCountdown()" style="display: none; margin-top: 25px;">Finalizar
-            Ritual</button>
+            </div>
+          <button id="btnStartFinal" onclick="goToFinalCountdown()" style="display: none; margin-top: 25px;">Finalizar Ritual</button>
         </div>
-
       </div>
+
 
       <div class="panel section" id="sec1">
         <div style="margin-bottom: 15px; text-align: right;">
           <button class="backBtn" onclick="goToSection('sec0')">← Volver a Selección</button>
         </div>
-        <!-- Botón de Ubicación -->
-        <button class="location-button" onclick="openLocation(1)">Ver Ubicación de Guardián 1</button>
-
-        <h3>🔮 Guardián 1</h3>
-        <div class="prompt">
-          <!-- MODIFICADO: Acertijo del Guardián 1 (Tu sombra) -->
-          <pre style="white-space: pre-wrap; background:rgba(0,0,0,0.3);padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.02)">No tengo ojos, pero siempre te miro.
-
-No tengo voz, pero oyes mi suspiro.
-
-Sigo tus pasos en la noche callada,
-
-y si te giras… ya no hay nada.
-
-¿Qué soy?</pre>
+        <div class="location-container" style="margin-bottom: 20px; text-align: center;">
+            <a href="https://maps.app.goo.gl/2K5fLpVPjRyz1yE99" class="locationBtn" target="_blank">🗺️ Buscar Ubicación</a>
         </div>
-        <label>Respuesta (escribe en minúsculas)</label>
+        <h3>🔮 Guardián 1 — La Pitonisa</h3>
+        <audio controls class="dark-audio-player" src="assets/audio/S1.mp3"></audio>
+        <div class="prompt">
+            <p class="white-left-text">
+                En el viejo cortijo, una pitonisa contempla una esfera de luz. Su mirada atraviesa el tiempo, pero solo si sois capaces de ver lo que ella ve.
+            </p>
+            <p class="grey-right-text">
+                Tres caminos muestran vuestro destino: la sangre, la pureza o el vacío. Solo uno revela el camino a seguir… escríbelo, y hallarás el camino al siguiente guardián.
+            </p>
+            <p class="white-left-text" style="margin-top: 25px; font-style: italic;">
+                En la noche me prendo sin llama,<br>
+                tiño las manos del que toca el misterio.<br>
+                Me alimento de heridas y de rabia,<br>
+                señalo el final del camino y la advertencia en el pecho.<br>
+                Los vivos me buscan, los muertos me conocen.<br>
+                ¿Qué soy?
+            </p>
+        </div>
+
+        <label>Respuesta</label>
         <input id="ans1" type="text" autocomplete="off" />
         <div style="margin-top:8px">
           <button onclick="check1()">Enviar respuesta</button>
-          <button class="hintBtn" onclick="showHint(1)">Pista (+2 min)</button>
+          <button class="hintBtn" onclick="showHint(1)">Pista (Suma 2 min)</button>
         </div>
         <div id="msg1" class="small" style="margin-top:8px;color:#f2f2f2"></div>
-        <!-- ELIMINADO: Se quita el div de pista inline, ahora sale en el modal -->
         <div id="reward1" class="result hide"></div>
       </div>
 
@@ -253,281 +280,217 @@ y si te giras… ya no hay nada.
         <div style="margin-bottom: 15px; text-align: right;">
           <button class="backBtn" onclick="goToSection('sec0')">← Volver a Selección</button>
         </div>
-        <!-- Botón de Ubicación -->
-        <button class="location-button" onclick="openLocation(2)">Ver Ubicación de Guardián 2</button>
-
-        <!-- MODIFICADO: Nombre del guardián -->
-        <h3>🔪 Guardián 2</h3>
-        <div class="prompt">
-          <p class="blackadder-gray-left"
-            style="font-family: 'Blackadder ITC', cursive; color: var(--muted); text-align: left; margin: 5px 0; font-size: 24px;">
-            Mi voz retumba en piedra y metal, solo el eco sabrá si hablas bien o mal</p>
-          <p class="blackadder-white-right"
-            style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: right; margin: 5px 0; font-size: 24px;">
-            ¡Para seguir con vida, tendréis que demostrar que el miedo no os hace torpes!</p>
-          <p class="blackadder-gray-left"
-            style="font-family: 'Blackadder ITC', cursive; color: var(--muted); text-align: left; margin: 5px 0; font-size: 24px;">
-            Si encontráis el número correcto, os daré el camino al muerto que despierta...</p>
+        <div class="location-container" style="margin-bottom: 20px; text-align: center;">
+            <a href="https://maps.app.goo.gl/9Ke5vw5rPiTibB9w6" class="locationBtn" target="_blank">🗺️ Buscar Ubicación</a>
         </div>
+        <h3>🔪 Guardián 2 — Túnel del Eco Carmesí</h3>
+        <audio controls class="dark-audio-player" src="assets/audio/S2.mp3"></audio>
+        <div class="prompt">
+            <p class="grey-left-text">
+                Mi voz retumba en piedra y metal, solo el eco sabrá si hablas bien o mal
+            </p>
+            <p class="white-left-text" style="text-align: right; margin-top: 15px;">
+                ¡Para seguir con vida, tendréis que demostrar que el miedo no os hace torpes!
+            </p>
+            <p class="grey-left-text">
+                Si encontráis el número correcto en este túnel, os daré el camino al muerto que despierta...
+            </p>
+        </div>
+
         <label>Introduce el número que has encontrado</label>
         <input id="ans2" type="text" autocomplete="off" />
         <div style="margin-top:8px">
           <button onclick="check2()">Enviar respuesta</button>
-          <button class="hintBtn" onclick="showHint(2)">Pista (+2 min)</button>
+          <button class="hintBtn" onclick="showHint(2)">Pista (Suma 2 min)</button>
         </div>
         <div id="msg2" class="small" style="margin-top:8px;color:#f2f2f2"></div>
         <div id="reward2" class="result hide"></div>
-        <!-- ELIMINADO: Se quita el div de pista inline, ahora sale en el modal -->
       </div>
 
       <div class="panel section" id="sec3">
         <div style="margin-bottom: 15px; text-align: right;">
           <button class="backBtn" onclick="goToSection('sec0')">← Volver a Selección</button>
         </div>
-        <!-- Botón de Ubicación -->
-        <button class="location-button" onclick="openLocation(3)">Ver Ubicación de Guardián 3</button>
-
-        <!-- MODIFICADO: Nombre del guardián -->
-        <h3>🧟 Guardián 3</h3>
-        <div class="prompt">
-          <!-- MODIFICADO: 'El muerto' cambiado a 'Un muerto' -->
-          <p class="blackadder-white-left"
-            style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: left; margin: 5px 0; font-size: 20px;">
-            Un muerto te mira con ojos huecos.</p>
-          <p class="blackadder-white-left"
-            style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: left; margin: 5px 0; font-size: 20px;">
-            Su voz no pide cerebro, sino redención</p>
-          <p class="blackadder-white-left"
-            style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: left; margin: 5px 0; font-size: 20px;">
-            Cuando su acertijo se resuelve, deja una pista</p>
-          <p class="blackadder-white-left"
-            style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: left; margin: 5px 0; font-size: 20px;">
-            que apunta al siguiente destino</p>
+        <div class="location-container" style="margin-bottom: 20px; text-align: center;">
+            <a href="https://maps.app.goo.gl/YUHDjCQkAZTQb4Gf6" class="locationBtn" target="_blank">🗺️ Buscar Ubicación</a>
         </div>
-        <p class="small">Acertijo (resuelve en voz alta o escribe el número):</p>
-        <pre
-          style="white-space: pre-wrap; background:rgba(0,0,0,0.3);padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.02)">Tres tumbas hay en el campo,
+        <h3>🧟 Guardián 3 — El Silencio del Muerto</h3>
+        <audio controls class="dark-audio-player" src="assets/audio/S3.mp3"></audio>
+        <pre style="background:rgba(0,0,0,0.3);padding:8px;border-radius:6px;">Tres tumbas hay en el campo,
 en una descansa un alma, en otra dos,
 y la tercera espera al siguiente grupo.
-
-Si cada noche los muertos se levantan y duplican su número,
+Si cada noche los muertos se duplican,
 ¿cuántas almas vagarán al tercer amanecer?</pre>
-        <label>Tu respuesta (número)</label>
         <input id="ans3" type="text" autocomplete="off" />
         <div style="margin-top:8px">
           <button onclick="check3()">Enviar respuesta</button>
-          <button class="hintBtn" onclick="showHint(3)">Pista (+2 min)</button>
+          <button class="hintBtn" onclick="showHint(3)">Pista (Suma 2 min)</button>
         </div>
         <div id="msg3" class="small" style="margin-top:8px;color:#f2f2f2"></div>
         <div id="reward3" class="result hide"></div>
-        <!-- ELIMINADO: Se quita el div de pista inline, ahora sale en el modal -->
       </div>
 
       <div class="panel section" id="sec4">
         <div style="margin-bottom: 15px; text-align: right;">
           <button class="backBtn" onclick="goToSection('sec0')">← Volver a Selección</button>
         </div>
-        <!-- Botón de Ubicación -->
-        <button class="location-button" onclick="openLocation(4)">Ver Ubicación de Guardián 4</button>
-
-        <!-- MODIFICADO: Nombre del guardián -->
-        <h3>⛓️ Guardián 4</h3>
+        <div class="location-container" style="margin-bottom: 20px; text-align: center;">
+            <a href="https://maps.app.goo.gl/wWLTZj9hhyLF98Ar7" class="locationBtn" target="_blank">🗺️ Buscar Ubicación</a>
+        </div>
+        <h3>⛓️ Guardián 4 — La Monja del Silencio</h3>
+        <audio controls class="dark-audio-player" src="assets/audio/S4.mp3"></audio>
         <div class="prompt">
-          <!-- MODIFICADO: Nuevo texto y acertijo más simple y terrorífico -->
-          <p class="blackadder-white-left"
-            style="font-family: 'Blackadder ITC', cursive; color: #fff; text-align: left; margin: 5px 0; font-size: 20px;">
-            La Dama Encadenada os susurra desde su prisión de sombras. Solo un número abrirá las puertas de su celda:</p>
-          <pre
-            style="white-space: pre-wrap; background:rgba(0,0,0,0.3);padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.02)">En la casa de los lamentos,
-seis velas arden sin fin.
-Si una se apaga por la brisa helada,
-y tres más son consumidas por la angustia.
-¿Cuántas velas quedan de pie en el candelabro?</pre>
+            <p class="white-left-text">
+                Detrás de los barrotes la monja reza en la oscuridad. Debéis encontrar el símbolo de Huércal: una moneda con su escudo, y marcar que la habéis encontrado.
+            </p>
+            <p class="grey-right-text">
+                En el lugar hay una moneda escondida que podréis recuperar. Cuando la tengáis, marcadlo abajo.
+            </p>
         </div>
-
-        <label>Introduce la respuesta (un solo número)</label>
-        <input id="ans4" type="text" autocomplete="off" />
-
-        <div style="margin-top:8px">
-          <button onclick="check4()">Enviar respuesta</button>
-          <button class="hintBtn" onclick="showHint(4)">Pista (+2 min)</button>
+        
+        <div style="margin-top:20px; text-align: center;">
+          <p id="check4-label" style="color: #fff; margin-bottom: 15px; font-weight: bold;">¿Habéis encontrado la moneda?</p>
+          <div style="display: flex; gap: 15px; justify-content: center;">
+            <button onclick="checkCoin(true)" style="background-color: var(--accent); border: 1px solid var(--accent); color: white;">Sí, la he encontrado</button>
+            <button onclick="checkCoin(false)" class="backBtn">No, aún no la encuentro</button>
+          </div>
         </div>
-
-        <div id="msg4" class="small" style="margin-top:8px;color:#f2f2f2"></div>
-        <!-- ELIMINADO: Se quita el div de pista inline, ahora sale en el modal -->
+        
+        <div style="margin-top:20px; text-align: center;">
+          <button class="hintBtn" onclick="showHint(4)">Pista (Suma 2 min)</button>
+        </div>
+        <div id="msg4" class="small" style="margin-top:8px;color:#f2f2f2; text-align: center;"></div>
         <div id="reward4" class="result hide"></div>
       </div>
 
-      <!-- NUEVA SECCIÓN: Solo para la cuenta atrás final -->
       <div class="panel section" id="sec_final_countdown">
         <div style="margin-bottom: 15px; text-align: right;">
           <button class="backBtn" onclick="goToSection('sec0')">← Volver a Selección</button>
         </div>
-        <h3>🔔 Vuelo Final</h3>
-        <p style="font-family: 'Blackadder ITC', cursive; font-size: 24px; color: var(--accent); margin: 0;">¡Corred!
-          Debéis volver a la plaza del ayuntamiento</p>
+        <h3>🏃 Final — ¡Regresad al teatro!</h3>
+        <div class="prompt">¡Corred! Debéis volver al teatro multiusos.</div>
 
-        <div
-          style="border: 2px solid var(--accent); padding: 20px; border-radius: 10px; background: rgba(179, 51, 51, 0.1); margin: 20px 0; text-align: center;">
-          <h2 id="finalTimerDisplay" style="font-size: 60px; color: #fff; margin: 0;">05:00</h2>
-          <p style="font-size: 18px; color: var(--muted); margin: 10px 0 0 0;">Tiempo límite para regresar.</p>
+        <div id="finalCountdown" style="margin-top:20px;text-align:center;border:1px solid var(--accent);padding:15px;border-radius:8px;">
+          <p style="font-family:'Blackadder ITC';font-size:24px;color:var(--accent);">Cuenta atrás para el regreso</p>
+          <h2 id="finalTimerDisplay" style="font-size:48px;color:#fff;">05:00</h2>
+          <button id="btnFinishRitual" onclick="finishRun()">He regresado al inicio — Marcar tiempo</button>
         </div>
-
-        <button id="btnFinishRitual" onclick="finishRun()" style="font-size: 22px; padding: 12px 25px; margin-top: 20px;">He regresado al inicio — Marcar tiempo</button>
       </div>
-
 
       <div class="panel section" id="sec5">
         <div style="margin-bottom: 15px; text-align: right;">
           <button class="backBtn" onclick="goToSection('sec0')">← Volver a Selección</button>
         </div>
-        <h3>✅ Ritual Completado</h3>
-        <div class="prompt">¡La maldición se ha roto! Vuestro valor y astucia han sido suficientes.</div>
-        <p class="small">Vuestro tiempo oficial ha sido registrado. Mostrad esta pantalla al Guardián de Meta.</p>
-
-        <div id="finalResultDisplay"
-          style="text-align: center; padding: 20px; border: 2px solid var(--accent); border-radius: 10px; background: rgba(179, 51, 51, 0.1); margin-top: 20px;">
-        </div>
+        <h3>🔔 Final — Regreso al punto de inicio</h3>
+        <button onclick="finishRun()">He regresado al inicio — marcar tiempo</button>
+        <div id="finalResultDisplay" style="display:none;"></div>
       </div>
-
     </div>
 
-    <footer>Diseñado para <strong>La Noche de los Susurros en Arboleas</strong> — versión móvil. Mantén el móvil en
-      silencio para no romper la ambientación.</footer>
+    <footer>Diseñado para <strong>La Noche de los Susurros en Huércal</strong> — versión móvil.</footer>
   </div>
 
   <script>
-    // Variables y configuración
-    let startTs = null;
-    let elapsedBefore = 0;
-    let timerInterval = null;
-    let countdownInterval = null; // Nuevo para el temporizador de 5 min
-    let hintsUsed = 0;
-    let teamName = '';
-
-    // NUEVO: Array para rastrear qué secciones están completadas
-    // Se utiliza para mostrar/ocultar los botones del selector y habilitar el botón final
+    let startTs=null, elapsedBefore=0, timerInterval=null, countdownInterval=null, hintsUsed=0, teamName='';
+    
+    // Respuestas de Huércal (La clave 4 ya no se usa para checkear)
+    const correct={
+      1:['rojo'],
+      2:'13',
+      3:'24',
+      4:'99' // Se mantiene la clave 4, aunque ya no se usa para el check, solo para la estructura
+    };
+    
+    // 🔹 LÓGICA DEL HUB 🔹
     const completedSections = {
-      1: false,
-      2: false,
-      3: false,
-      4: false
+      1: false, // Pitonisa
+      2: false, // Túnel
+      3: false, // Muerto
+      4: false  // Monja (Nuevo)
     };
 
-    // MODIFICADO: Etiqueta de los Guardianes simplificada
+    // Etiquetas de Huércal y 4 Guardianes
     const sectionDetails = {
       1: {
         id: 'sec1',
-        label: 'Guardián 1'
+        label: 'Guardián 1 — La Pitonisa'
       },
       2: {
         id: 'sec2',
-        label: 'Guardián 2'
+        label: 'Guardián 2 — Túnel del Eco Carmesí'
       },
       3: {
         id: 'sec3',
-        label: 'Guardián 3'
+        label: 'Guardián 3 — El Silencio del Muerto'
       },
       4: {
         id: 'sec4',
-        label: 'Guardián 4'
+        label: 'Guardián 4 — La Monja del Silencio'
       }
     };
-
-    // Respuestas correctas
-    const correct = {
-      1: ['tu sombra', 'sombra', 'tusombra'], // Guardián 1
-      2: '13', // Guardián 2
-      3: '24', // Guardián 3
-      4: '2' // Guardián 4: 6 velas - 4 apagadas = 2 quedan encendidas/en pie.
-    };
-
-    const locationUrls = {
-      1: 'https://maps.app.goo.gl/2EafbzYGXRCtRmyS7',
-      2: 'https://maps.app.goo.gl/bMndTrHzv4xrkr6TA',
-      3: 'https://maps.app.goo.gl/iTJCapCmPxauYwGY6',
-      4: 'https://maps.app.goo.gl/HoyvxAuguCb3fxY57'
-    };
+    
+    // Lista de todas las secciones
+    const allSectionIds = ['sec0', 'sec1', 'sec2', 'sec3', 'sec4', 'sec_final_countdown', 'sec5'];
 
 
     // ----------------------------------------------------
     // Funciones de utilidad para el Modal Personalizado
     // ----------------------------------------------------
-
-    // Función para mostrar el modal
     function showCustomAlert(message, title = "Aviso del Libro") {
       const modal = document.getElementById('customAlert');
       const modalTitle = document.getElementById('modalTitle');
       const modalMessage = document.getElementById('modalMessage');
-
       modalTitle.textContent = title;
       modalMessage.innerHTML = message;
       modal.classList.add('show');
     }
 
-    // Función para cerrar el modal
     function closeCustomAlert() {
       const modal = document.getElementById('customAlert');
       modal.classList.remove('show');
     }
 
-    function formatTime(ms) {
-      const totalSeconds = Math.floor(ms / 1000);
-      const sec = totalSeconds % 60;
-      const min = Math.floor(totalSeconds / 60) % 60;
-      const hr = Math.floor(totalSeconds / 3600);
-      return `${String(hr).padStart(2, '0')}:${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+    // --- Funciones del temporizador ---
+    function formatTime(ms){
+        const totalSeconds = Math.floor(ms / 1000);
+        const sec = totalSeconds % 60;
+        const min = Math.floor(totalSeconds / 60) % 60;
+        const hr = Math.floor(totalSeconds / 3600);
+        // Formato H:MM:SS
+        return `${String(hr).padStart(2, '0')}:${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
     }
 
-    function startTimer() {
-      startTs = Date.now();
-      timerInterval = setInterval(() => {
-        const now = Date.now();
-        // Se suma la penalización (120000ms = 2 minutos)
-        document.getElementById('timer').textContent = formatTime(now - startTs + elapsedBefore + hintsUsed * 120000);
-      }, 250);
+    function startTimer(){
+        startTs=Date.now();
+        timerInterval=setInterval(()=>{
+            const now=Date.now();
+            document.getElementById('timer').textContent=formatTime(now-startTs+hintsUsed*120000);
+        },250);
     }
-
-    function stopTimer() {
-      clearInterval(timerInterval);
-    }
-
-    // MODIFICADO: Esta función ahora solo aumenta el contador, la alerta se genera en showHint
-    function useHint() {
+    
+    function stopTimer(){clearInterval(timerInterval);}
+    
+    function useHint(){
       hintsUsed++;
     }
 
-    // FUNCIÓN CLAVE MODIFICADA: Ahora muestra la pista en el modal
-    function showHint(sectionNum) {
-      if (completedSections[sectionNum]) {
+    // Pistas (Ajustadas a Huércal)
+    function showHint(n){
+      if (completedSections[n]) {
         showCustomAlert('Ya habéis resuelto este guardián. No se necesita pista.', '⛔ Advertencia');
         return;
       }
-
-      // 1. Aplicar Penalización
       useHint();
+      
+      const hints = {
+        1: 'Del color de la sangre', 
+        2: 'Buscad por el túnel', 
+        3: 'El primer amanecer son 6 almas y el segundo 12',
+        4: 'El número está justo delante de sus barrotes.' // Pista para Guardián 4
+      };
+      
+      const hintText = hints[n] || "Pista no disponible.";
 
-      // 2. Determinar el mensaje de la pista
-      let hintText = '';
-      switch (sectionNum) {
-        case 1:
-          hintText = "Es tuya y la ves todos los días";
-          break;
-        case 2:
-          hintText = "Buscad por la zona, es la única pista";
-          break;
-        case 3:
-          hintText = "el primer amanecer son 6 almas y el segundo 12";
-          break;
-        case 4:
-          hintText = "Cuenta solo las que NO se han apagado o consumido.";
-          break;
-        default:
-          hintText = "La pista no está disponible en este momento. Intenta contactar con el Guardián de Meta.";
-          break;
-      }
-
-      // 3. Mostrar la pista y la penalización en el modal
       const modalMessage = `
         <p style="color: var(--accent); font-weight: bold; font-size: 22px; margin-bottom: 15px;">
           Penalización: +2 minutos
@@ -536,68 +499,15 @@ y tres más son consumidas por la angustia.
           "${hintText}"
         </p>
       `;
-
-      showCustomAlert(modalMessage, `🗝️ Pista de Guardián ${sectionNum}`);
+      showCustomAlert(modalMessage, `🗝️ Pista de Guardián ${n}`);
     }
 
-    // Función para ir a cualquier sección y actualizar el selector al volver a sec0
-    function goToSection(sectionId) {
-      // Primero, oculta todas las secciones
-      const sections = ['sec0', 'sec1', 'sec2', 'sec3', 'sec4', 'sec_final_countdown', 'sec5'];
-      sections.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.display = 'none';
-      });
+    // Ocultar secciones al inicio
+    window.addEventListener('DOMContentLoaded',()=>allSectionIds.forEach(id=>document.getElementById(id).style.display='none'));
 
-      // Si volvemos al selector, lo actualizamos
-      if (sectionId === 'sec0') {
-        renderSectionSelector();
-      }
+    // 🔹 LÓGICA DE NAVEGACIÓN Y HUB 🔹
 
-      // Luego, muestra la sección objetivo
-      const targetEl = document.getElementById(sectionId);
-      if (targetEl) {
-        targetEl.style.display = 'block';
-        targetEl.scrollIntoView({
-          behavior: 'smooth'
-        });
-      }
-    }
-
-    // NUEVO: Función para abrir la ubicación de Google Maps
-    // MODIFICADO: Usando showCustomAlert
-    function openLocation(guardianNum) {
-      const url = locationUrls[guardianNum];
-      if (url) {
-        window.open(url, '_blank');
-      } else {
-        showCustomAlert('La ubicación para este Guardián no está disponible o no se ha cargado.', '❌ Error de Ubicación');
-      }
-    }
-
-    // Función que se llama al resolver una sección
-    // MODIFICADO: Usando showCustomAlert
-    function markSectionCompleted(num) {
-      if (!completedSections[num]) {
-        completedSections[num] = true;
-        showCustomAlert(`¡Guardián ${num} silenciado! Has completado el reto. Volviendo al selector.`, '✅ Reto Superado');
-        goToSection('sec0'); // Volver al selector para actualizar los botones
-      }
-    }
-
-
-    // Oculta todas las secciones al cargar la página
-    window.addEventListener('DOMContentLoaded', () => {
-      const sections = ['sec0', 'sec1', 'sec2', 'sec3', 'sec4', 'sec_final_countdown', 'sec5'];
-      sections.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.display = 'none';
-      });
-      // Inicializar el selector para que no esté vacío si no se ha iniciado el juego
-      renderSectionSelector();
-    });
-
-    // NUEVA FUNCIÓN: Renderiza los botones del selector dinámicamente
+    // Renderiza los botones del hub
     function renderSectionSelector() {
       const container = document.getElementById('guardianButtonsContainer');
       const btnFinal = document.getElementById('btnStartFinal');
@@ -609,26 +519,23 @@ y tres más son consumidas por la angustia.
         const isCompleted = completedSections[num];
 
         if (!isCompleted) {
-          allCompleted = false; // Si falta alguna, el ritual no está listo
-          // Crear botón solo para secciones incompletas
+          allCompleted = false;
           const button = document.createElement('button');
-          // MODIFICADO: Usa la etiqueta simple sin descripción
           button.textContent = detail.label;
-          button.onclick = () => goToSection(detail.id);
+          button.onclick = () => goToSection(detail.id); 
           container.appendChild(button);
         } else {
-          // Opcional: Mostrar un mensaje de completado para esa sección
           const completedMessage = document.createElement('div');
           completedMessage.innerHTML =
-            `<span style="color:#00AA00; font-weight: bold;">✅ ${detail.label} completado.</span>`;
+            `<span style="color:#00AA00; font-weight: bold;">✅ ${detail.label} silenciado.</span>`;
           completedMessage.style.padding = '5px 0';
           completedMessage.style.borderBottom = '1px solid rgba(0,255,0,0.1)';
           container.appendChild(completedMessage);
         }
       }
 
-      // Mostrar u ocultar el botón Finalizar Ritual
-      if (allCompleted) {
+      // 4 Guardianes completados
+      if (allCompleted) { 
         container.innerHTML =
           `<p style="color: var(--accent); font-weight: bold;">¡Los 4 Guardianes han sido silenciados!</p>`;
         btnFinal.style.display = 'block';
@@ -637,250 +544,176 @@ y tres más son consumidas por la angustia.
       }
     }
 
-    // Función para el botón "Finalizar Ritual" que inicia la cuenta atrás
+    // Marca una sección como completada y vuelve al hub
+    function markSectionCompleted(n) {
+      if (!completedSections[n]) {
+        completedSections[n] = true;
+        showCustomAlert(`¡Guardián ${n} silenciado! Has completado el reto. Volviendo al selector.`, '✅ Reto Superado');
+        goToSection('sec0'); // sec0 es ahora el Hub
+      }
+    }
+
+    // Inicia la cuenta atrás final
     function goToFinalCountdown() {
       goToSection('sec_final_countdown');
       startFinalCountdown(300); // 300 segundos = 5 minutos
     }
 
-    // ----------------------------------------------------
-    // Al pulsar “Comenzar ritual”
-    // ----------------------------------------------------
-    // MODIFICADO: Usando showCustomAlert
-    function btnStartClick() {
-      const teamNameInput = document.getElementById('teamName');
-      teamName = (teamNameInput && teamNameInput.value.trim()) || '';
 
-      if (!teamName) {
+    // Función de Inicio (Modificada para ir a sec0/Hub)
+    function btnStartClick(){
+      const input=document.getElementById('teamName');
+      teamName=(input&&input.value.trim())||'';
+      if(!teamName){
         showCustomAlert('<strong>¡Debes introducir el nombre del equipo</strong> para comenzar el ritual!', '⚠️ Falta Nombre');
         return;
       }
+      document.getElementById('team-display').textContent=teamName;
+      document.getElementById('startPanel').classList.add('hide');
+      document.getElementById('flow').classList.remove('hide');
+      
+      // Ir al HUB (sec0) y mostrar el selector
+      goToSection('sec0'); 
+      document.getElementById('sectionSelector').style.display = 'block'; // Mostrar el selector del Hub
+      renderSectionSelector(); // Asegurar que los botones se carguen
 
-      const teamDisplay = document.getElementById('team-display');
-      if (teamDisplay) {
-        teamDisplay.textContent = teamName;
+      startTimer();
+    }
+    document.getElementById('btnStart').addEventListener('click',btnStartClick);
+
+    // goToSection
+    function goToSection(id){
+      allSectionIds.forEach(s=>{
+        const el=document.getElementById(s);
+        if(el) el.style.display=s===id?'block':'none';
+      });
+      
+      // Si volvemos al hub, lo recargamos
+      if (id === 'sec0') {
+        renderSectionSelector();
+        document.getElementById('sectionSelector').style.display = 'block';
       }
-
-      const startPanel = document.getElementById('startPanel');
-      if (startPanel) startPanel.style.display = 'none';
-
-      const flow = document.getElementById('flow');
-      if (flow) flow.classList.remove('hide');
-
-      // Mostrar sec0 y el selector de secciones
-      goToSection('sec0');
-      document.getElementById('sectionSelector').style.display = 'block';
-      renderSectionSelector(); // Asegurar que el selector se muestre correctamente
-
-      if (typeof startTimer === 'function') startTimer();
-
-      const status = document.getElementById('status');
-      if (status) {
-        status.textContent = 'El cronómetro ha comenzado. Seguid las pistas y completad las pruebas.';
-      }
+      window.scrollTo({top:0,behavior:'smooth'});
     }
 
-    // ----------------------------------------------------
-    // Check 1 (Guardián 1 - Tu sombra)
-    // ----------------------------------------------------
-    function check1() {
-      if (completedSections[1]) {
-        document.getElementById('msg1').textContent = 'Ya habéis resuelto este guardián.';
-        return;
-      }
-      // Aseguramos que la respuesta se compara sin espacios internos ni mayúsculas
-      const val = document.getElementById('ans1').value.toLowerCase().trim().replace(/\s/g, '');
-      const ok = correct[1].includes(val);
+
+    // 🔹 COMPROBACIONES (CHECKS) 🔹
+
+    function check1(){
+      if (completedSections[1]) { document.getElementById('msg1').textContent = 'Ya habéis resuelto este guardián.'; return; }
+      const v=document.getElementById('ans1').value.toLowerCase().trim();
       const msg = document.getElementById('msg1');
-      const reward = document.getElementById('reward1'); // Obtener el elemento de recompensa
-      if (ok) {
-        msg.innerHTML = '<span style="color: var(--accent); font-weight: bold;">¡Guardián silenciado! Pista de la Sombra registrada.</span>';
-        reward.innerHTML = `<div style="margin-top: 10px;"><button class="backBtn" onclick="markSectionCompleted(1)">Continuar →</button></div>`;
+      const reward = document.getElementById('reward1');
+      if(correct[1].includes(v)){
+        // ❗ Botón movido a reward ❗
+        msg.textContent='';
+        reward.innerHTML = '<p style="color:white; margin-bottom:15px; font-weight:bold;">✅ La pitonisa asiente. Pista desbloqueada.</p><div style="text-align:right;"><button style="background-color: white; color: var(--accent); border: 2px solid white; border-radius: 6px; padding: 10px 20px; font-weight: bold; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.backgroundColor=\'#eee\'" onmouseout="this.style.backgroundColor=\'white\'" onclick="markSectionCompleted(1)">Continuar →</button></div>';
         reward.classList.remove('hide');
-        // NUEVO: Scroll hacia el resultado
-        reward.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      } else {
-        msg.textContent = 'La respuesta se desvanece en la oscuridad. Intenta de nuevo.';
-        msg.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        }); // Scroll a mensaje de error
+      }else{
+        msg.textContent='La luz vacila: prueba otra vez.';
+        reward.classList.add('hide');
       }
     }
 
-    // ----------------------------------------------------
-    // Check 2 (Guardián 2 - Número 13)
-    // ----------------------------------------------------
-    function check2() {
-      if (completedSections[2]) {
-        document.getElementById('msg2').textContent = 'Ya habéis resuelto este guardián.';
-        return;
-      }
-      const val = document.getElementById('ans2').value.trim();
+    function check2(){
+      if (completedSections[2]) { document.getElementById('msg2').textContent = 'Ya habéis resuelto este guardián.'; return; }
+      const v=document.getElementById('ans2').value.trim();
       const msg = document.getElementById('msg2');
-      const reward = document.getElementById('reward2'); // Obtener el elemento de recompensa
-      if (val === correct[2]) {
-        msg.innerHTML = '<span style="color: var(--accent); font-weight: bold;">¡Guardián silenciado! Pista del Cráneo registrada.</span>';
-        reward.innerHTML = `<div style="margin-top: 10px;"><button class="backBtn" onclick="markSectionCompleted(2)">Continuar →</button></div>`;
+      const reward = document.getElementById('reward2');
+      if(v===correct[2]){
+        // ❗ Botón movido a reward ❗
+        msg.textContent='';
+        reward.innerHTML = '<p style="color:white; margin-bottom:15px; font-weight:bold;">✅ ¡Respuesta correcta! El hombre de la motosierra se aparta.</p><div style="text-align:right;"><button style="background-color: white; color: var(--accent); border: 2px solid white; border-radius: 6px; padding: 10px 20px; font-weight: bold; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.backgroundColor=\'#eee\'" onmouseout="this.style.backgroundColor=\'white\'" onclick="markSectionCompleted(2)">Continuar →</button></div>';
         reward.classList.remove('hide');
-        // NUEVO: Scroll hacia el resultado
-        reward.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      } else {
-        msg.textContent = 'El eco no os da la respuesta. Volved a mirar.';
-        msg.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        }); // Scroll a mensaje de error
+      }else{
+        msg.textContent='El eco no os da la respuesta.';
+        reward.classList.add('hide');
       }
     }
-
-    // ----------------------------------------------------
-    // Check 3 (Guardián 3 - Número 24)
-    // ----------------------------------------------------
-    function check3() {
-      if (completedSections[3]) {
-        document.getElementById('msg3').textContent = 'Ya habéis resuelto este guardián.';
-        return;
-      }
-      const val = document.getElementById('ans3').value.trim();
+    
+    function check3(){
+      if (completedSections[3]) { document.getElementById('msg3').textContent = 'Ya habéis resuelto este guardián.'; return; }
+      const v=document.getElementById('ans3').value.trim();
       const msg = document.getElementById('msg3');
-      const reward = document.getElementById('reward3'); // Obtener el elemento de recompensa
-      if (val === correct[3]) {
-        msg.innerHTML = '<span style="color: var(--accent); font-weight: bold;">¡Guardián silenciado! Pista del Muerto registrada.</span>';
-        reward.innerHTML = `<div style="margin-top: 10px;"><button class="backBtn" onclick="markSectionCompleted(3)">Continuar →</button></div>`;
+      const reward = document.getElementById('reward3');
+      if(v===correct[3]){
+        // ❗ Botón movido a reward ❗
+        msg.textContent='';
+        reward.innerHTML = '<p style="color:white; margin-bottom:15px; font-weight:bold;">✅ ¡Respuesta correcta! El muerto os entrega su secreto.</p><div style="text-align:right;"><button style="background-color: white; color: var(--accent); border: 2px solid white; border-radius: 6px; padding: 10px 20px; font-weight: bold; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.backgroundColor=\'#eee\'" onmouseout="this.style.backgroundColor=\'white\'" onclick="markSectionCompleted(3)">Continuar →</button></div>';
         reward.classList.remove('hide');
-        // NUEVO: Scroll hacia el resultado
-        reward.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      } else {
-        msg.textContent = 'El muerto no se conforma. Recalculad los huesos.';
-        msg.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        }); // Scroll a mensaje de error
+      }else{
+        msg.textContent='El muerto no se conforma.';
+        reward.classList.add('hide');
       }
     }
 
-    // ----------------------------------------------------
-    // Check 4 (Guardián 4 - Acertijo de Velas: respuesta 2)
-    // ----------------------------------------------------
-    function check4() {
-      if (completedSections[4]) {
-        document.getElementById('msg4').textContent = 'Ya habéis resuelto este guardián.';
-        return;
-      }
-      // Se compara la respuesta con el nuevo valor '2'
-      const val = document.getElementById('ans4').value.toLowerCase().trim().replace(/\s/g, '');
+    // ❗ NUEVA FUNCIÓN PARA EL GUARDIÁN 4 (MONEDA) ❗
+    function checkCoin(found){
+      if (completedSections[4]) { document.getElementById('msg4').textContent = 'Ya habéis resuelto este guardián.'; return; }
       const msg = document.getElementById('msg4');
-      const reward = document.getElementById('reward4'); // Obtener el elemento de recompensa
-      const ok = val === correct[4];
-
-      if (ok) {
-        msg.innerHTML = '<span style="color: var(--accent); font-weight: bold;">¡Guardián silenciado! El Libro de los Susurros está completo.</span>';
-        reward.innerHTML = `<div style="margin-top: 10px;"><button class="backBtn" onclick="markSectionCompleted(4)">Continuar →</button></div>`;
+      const reward = document.getElementById('reward4');
+      
+      // Limpiar el mensaje previo
+      msg.textContent = '';
+      
+      if (found === true) {
+        // ❗ Botón movido a reward ❗
+        reward.innerHTML='<p style="color:white; margin-bottom:15px; font-weight:bold;">✅ ¡La moneda! La monja os entrega el pergamino.</p><div style="text-align:right;"><button style="background-color: white; color: var(--accent); border: 2px solid white; border-radius: 6px; padding: 10px 20px; font-weight: bold; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.backgroundColor=\'#eee\'" onmouseout="this.style.backgroundColor=\'white\'" onclick="markSectionCompleted(4)">Continuar →</button></div>';
         reward.classList.remove('hide');
-
-        // Ocultar los campos de respuesta y botones de la sección 4
-        document.getElementById('ans4').style.display = 'none';
-        document.querySelector('#sec4 > div[style*="margin-top:8px"]').style.display = 'none';
-
-        // NUEVO: Scroll hacia el resultado
-        reward.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-
       } else {
-        msg.textContent = 'La Dama sigue encadenada, su número es incorrecto. Vuelve a contar las llamas.';
-        msg.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        }); // Scroll a mensaje de error
+        msg.textContent='Aún no la encontráis. Seguid buscando.';
+        reward.classList.add('hide');
       }
     }
 
-    // ----------------------------------------------------
-    // Timer Final (5 minutos)
-    // ----------------------------------------------------
-    function startFinalCountdown(durationInSeconds) {
-      let timer = durationInSeconds;
-      const display = document.getElementById('finalTimerDisplay');
 
-      if (countdownInterval) clearInterval(countdownInterval);
-
-      countdownInterval = setInterval(() => {
-        const minutes = parseInt(timer / 60, 10);
-        const seconds = parseInt(timer % 60, 10);
-
-        const displayTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-        display.textContent = displayTime;
-
-        if (--timer < 0) {
+    // 🔹 LÓGICA FINAL (Cuenta atrás) 🔹
+    function startFinalCountdown(s){
+      let t=s;
+      const disp=document.getElementById('finalTimerDisplay');
+      if(countdownInterval)clearInterval(countdownInterval);
+      
+      countdownInterval=setInterval(()=>{
+        const m=parseInt(t/60,10),sec=parseInt(t%60,10);
+        disp.textContent=`${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+        if(--t<0){
           clearInterval(countdownInterval);
-          display.textContent = "¡Tiempo de vuelta agotado!";
+          disp.textContent="¡Tiempo agotado!";
         }
-      }, 1000);
+      },1000);
     }
-
-
-    // ----------------------------------------------------
-    // Finish Run (Finalización)
-    // ----------------------------------------------------
-    function finishRun() {
+    
+    function finishRun(){
       stopTimer();
-      if (countdownInterval) clearInterval(countdownInterval);
-
-      const now = Date.now();
-      // Se suma la penalización (hintsUsed * 120000ms)
-      const raw = (now - startTs + elapsedBefore + hintsUsed * 120000);
-      const finalTime = formatTime(raw);
-
-      // Ocultar el timer fijo de la esquina
+      if(countdownInterval)clearInterval(countdownInterval);
+      
+      const now=Date.now(),raw=(now-startTs+hintsUsed*120000),time=formatTime(raw);
+      
       document.getElementById('timer-container').style.display = 'none';
+      
+      goToSection('sec5');
 
-      // Ocultar la sección actual (sec_final_countdown) y mostrar solo sec5
-      document.getElementById('sec_final_countdown').style.display = 'none';
-      goToSection('sec5'); // Muestra la sección final
-
-      // Generar el contenido final (Solo nombre, tiempo e imágenes)
       const finalResultDisplay = document.getElementById('finalResultDisplay');
-      finalResultDisplay.innerHTML = `
-          <div style="font-family: 'Blackadder ITC', cursive; color: #fff;">
+      finalResultDisplay.style.display='block';
+      
+      // Output final
+      finalResultDisplay.innerHTML=`
+        <div style="background: #1e1e20; padding: 25px; border-radius: 12px; border: 2px solid var(--accent); margin-top: 20px; text-align: center; color: #fff;">
               <h4 style="font-size: 36px; margin: 0 0 10px 0;">${teamName}</h4>
-              <h1 style="font-size: 80px; color: var(--accent); margin: 0 0 20px 0;">${finalTime}</h1>
+              <h1 style="font-size: 80px; color: var(--accent); margin: 0 0 20px 0;">${time}</h1>
               
-              <!-- Contenedor vertical apilado -->
               <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 30px;">
-                  <!-- IMAGEN DE ARBOLEAS: Rectangular -->
-                  <img src="arboleas.png" onerror="this.onerror=null; this.src='https://placehold.co/200x120/121213/b33?text=ARBOLEAS'" alt="Escudo de Arboleas" style="height: 120px; width: auto; border-radius: 4px;">
-                  <img src="sincabeza.png" onerror="this.onerror=null; this.src='https://placehold.co/60x60/121213/9a9a9a?text=LOGO'" alt="Logo de la Empresa" style="height: 60px; width: auto;">
+                  <img src="huercal.png" onerror="this.onerror=null; this.src='https://placehold.co/200x120/121213/b33?text=HUERCAL'\" alt="Escudo de Huércal" style="height: 120px; width: auto; border-radius: 4px;">
+                  <img src="sincabeza.png" onerror="this.onerror=null; this.src='https://placehold.co/60x60/121213/9a9a9a?text=LOGO'\" alt="Logo de la Empresa" style="height: 60px; width: auto;">
               </div>
               <p style="font-size: 20px; color: var(--muted); margin-top: 20px;">Penalización por pistas: ${hintsUsed * 2} min</p>
           </div>
       `;
-      finalResultDisplay.style.display = 'block';
-
-      // Ocultar el botón original de finishRun
-      const finishButton = document.querySelector('#sec5 button');
+        
+      // Ocultar botón "He regresado" de la sección 5
+      const finishButton = document.querySelector('#sec5 > button');
       if (finishButton) finishButton.style.display = 'none';
-
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
     }
-
-    // start button
-    document.getElementById('btnStart').addEventListener('click', btnStartClick);
   </script>
 </body>
-
 </html>
